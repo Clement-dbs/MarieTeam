@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    font-family: 'NeueMontreal', sans-serif;
+}
+
+.contenuPrincipale{
+    background-image: url("../Assets/Images/ferry.webp");
+    height: 80vh;
+    background-position: center;
+    background-size: cover;
+}
+
+h3{
+    color: red;
+}
+
+button{
+    padding: 10px;
+    background-color: #0F4698;
+    border: none;
+    font-family: 'NeueMontreal', sans-serif;
+    color: rgb(0, 0, 0);
+    background-color: rgb(199, 199, 199);
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: gray;
+ }
+
+header{
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Side Bar */
+.side-bar{
+    background-color: white;
+    float: left;
+    width: 15vw;
+    height: 80vh;
+ 
+}
+
+.side-bar > form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+
+}
+
+.side-bar > form > p > input{
+    text-align: left;
+    font-family: 'NeueMontreal', sans-serif;
+    font-size: 20px;
+    background-color: rgb(199, 199, 199);
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+.side-bar > form > p > input:hover{
+   background-color: gray;
+}
+
+/* Selection Liaisons */
+
+.selectionLiaison{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.selectionLiaison > select {
+    
+}
+
+
+/* Affiche Traversees*/
+
+.afficherTraversees{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.afficherTraversees > form > tr, td:not(:last-child){
+    border: solid 1px black;
+    padding: 10px;
+    color: rgb(0, 0, 0);
+}
+
+table{
+    background-color: rgb(199, 199, 199);
+    opacity: 75%;
+}
+
+/* Footer */
+footer{
+   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer{
+    display: flex;
+    padding: 50px;
+}
+
+.footer > .logo {
+   
+}
+
+.footer a {
+    color: black;
+}
+
+.footer > .links{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.footer > .links > a{
+    padding: 10px;
+}
+
+.footer > .legals{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.footer > .legals > a{
+    padding: 10px;
+}
+
+.footer > .medias {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.footer > .medias > a{
+    padding: 10px;
+}
