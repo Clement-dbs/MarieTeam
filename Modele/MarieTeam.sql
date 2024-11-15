@@ -68,8 +68,6 @@ CREATE TABLE  reservation (
 );
 
 
-/* Jeu d'essaies
-
 INSERT INTO liaison (CodeLiaison, Distance_en_Miles, PortDepart, PortArrive, nomSecteur) VALUES
 (15, 8.3, 'Quiberon', 'Le Palais','Aix'),
 (24, 9, 'Le Palais', 'Quiberon','Aix'),
@@ -116,4 +114,3 @@ INSERT INTO `traversees`(`Heure`, `Bateau`, `Places_A_Passager`, `Places_B_Veh_i
 ('18:15','Al xi','206','2','0','17'),
 ('19:45','Maellys','136','0','0','15');
 
-*/

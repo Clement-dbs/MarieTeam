@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'NeueMontrealRegular';
+    src: url('../Assets/Font/NeueMontreal/NeueMontreal-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NeueMontrealBold';
+    src: url('../Assets/Font/NeueMontreal/NeueMontreal-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+:root {
+    --primary-color: #FFFFFF;
+    --secondary-color: #1A2E75;
+  }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
