@@ -1,6 +1,8 @@
 
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,32 +12,25 @@
 </head>
 
 <body>
+    
     <?php
-        include_once "Modele/session.php";
+        include_once "racine.php";
+        include_once "$racine/Controleur/routes.php";
         include_once "Modele/function.php";
+        include_once "Controleur/session.php";
         include 'Vue/header.php';
+      
+        if (isset($_GET["action"])) {
+            $action = $_GET["action"];
+        } 
+        else {
+            $action = "defaut";
+        }
+        
+        $fichier = routes($action);
+        include "$racine/Controleur/$fichier";
     ?>
 
-    <div class="flex justify-around bg-pink-500 h-40">
-        <form action="" method="post" class="flex items-center">
-            <?php     
-                include 'Vue/secteur.php';
-                include 'Vue/date.php';
-                include 'Vue/liaison.php';
-            ?>
-        </form>
-    </div>
-    
-    <div class="flex justify-center bg-gray-100">
-        <?php 
-            include 'Vue/traversees.php';
-        ?>
-    </div>
-    
-  
-    <?php
-        //include 'Vue/footer.php';
-    ?>   
 </body>
 
 </html>

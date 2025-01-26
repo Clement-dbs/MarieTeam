@@ -1,0 +1,99 @@
+
+<div class="bg-gray-100 p-4 rounded-md shadow-md mt-4">
+    <h2 class="text-xl font-semibold mb-4">Détails de la Session</h2>
+    
+    <div class="mb-4">
+        <h3 class="text-lg font-medium">Secteur</h3>
+        <?php if(isset($_SESSION['secteur'])): ?>
+            <pre class="bg-white p-2 border rounded-md"><?php var_dump($_SESSION['secteur']); ?></pre>
+        <?php else: ?>
+            <p>Aucun secteur sélectionné.</p>
+        <?php endif; ?>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="text-lg font-medium">Liaison</h3>
+        <?php if(isset($_SESSION['liaison'])): ?>
+            <pre class="bg-white p-2 border rounded-md"><?php var_dump($_SESSION['liaison']); ?></pre>
+        <?php else: ?>
+            <p>Aucune liaison sélectionnée.</p>
+        <?php endif; ?>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="text-lg font-medium">Date</h3>
+        <?php if(isset($_SESSION['dateDepart'])): ?>
+            <pre class="bg-white p-2 border rounded-md"><?php var_dump($_SESSION['dateDepart']); ?></pre>
+        <?php else: ?>
+            <p>Aucune date sélectionnée.</p>
+        <?php endif; ?>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="text-lg font-medium">Traversée</h3>
+        <?php if(isset($_SESSION['traversee'])): ?>
+            <pre class="bg-white p-2 border rounded-md"><?php var_dump($_SESSION['traversee']); ?></pre>
+        <?php else: ?>
+            <p>Aucune traversée sélectionnée.</p>
+        <?php endif; ?>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="text-lg font-medium">Utilisateur</h3>
+        <?php if(isset($_SESSION['utilisateur'])): ?>
+            <pre class="bg-white p-2 border rounded-md"><?php var_dump($_SESSION['utilisateur']); ?></pre>
+        <?php else: ?>
+            <p>Aucun utilisateur connecté.</p>
+        <?php endif; ?>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="text-lg font-medium">ID periode</h3>
+        <?php if(isset($_SESSION['idPeriode'])): ?>
+            <pre class="bg-white p-2 border rounded-md"><?php var_dump($_SESSION['idPeriode']); ?></pre>
+        <?php else: ?>
+            <p>Aucun id de periode</p>
+        <?php endif; ?>
+    </div>
+</div>
+
+
+--- INDEX ---
+
+<div class="flex justify-around h-64 shadow-lg p-6 bg-blue-700  ">
+        <form action="" method="post" class="flex items-center text-white">
+
+            <div class="flex flex-col justify-center mr-10">
+                <?php    
+                    include 'Vue/secteur.php';
+                    include 'Vue/liaison.php';
+                ?>
+            </div>
+           
+            <div class="flex flex-col justify-center mx-10">
+                <?php    
+                   include 'Vue/dateDepart.php';
+                   include 'Vue/dateRetour.php';
+                ?>
+            </div>
+            <input type="submit" value="Rechercher">
+         
+        </form>
+    </div>
+
+    <div class="flex flex-col justify-center bg-container">
+        <div class="flex justify-center">
+            <h2 class='text-2xl font-NeueMontrealBold m-14'>Sélectionnez votre trajet</h2>
+        </div>
+        <div class="flex justify-center">
+            <?php 
+                include 'Vue/traversees.php';
+                include 'Vue/detailsTraversee.php';
+            ?>
+        </div>
+    </div>
+    <div class="flex gap-4">
+
+    <?php
+        //include 'Vue/footer.php';
+    ?>   

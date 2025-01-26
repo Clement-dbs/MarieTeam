@@ -14,7 +14,7 @@ module.exports = {
       colors:{
         header: '#111111',
         "primary-color": "var(--primary-color)",
-        "secondary-color": "var(--secondary-color)"
+        "secondary-color": "var(--secondary-color)",
       }
     },
   },
