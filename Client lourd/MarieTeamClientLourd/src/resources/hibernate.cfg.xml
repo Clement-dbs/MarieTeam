@@ -14,9 +14,9 @@
         <property name="hibernate.show_sql">true</property>
 
         <!-- Classes annotées -->
-        <mapping class="com.marieteam.models.Bateau"/>
-        <mapping class="com.marieteam.models.Reservation"/>
-        <mapping class="com.marieteam.models.Traversee"/>
-        <mapping class="com.marieteam.models.Utilisateur"/>
+        <mapping class="marieteam.models.Bateau"/>
+        <mapping class="marieteam.models.Reservation"/>
+        <mapping class="marieteam.models.Traversee"/>
+        <mapping class="marieteam.models.Utilisateur"/>
     </session-factory>
 </hibernate-configuration>
