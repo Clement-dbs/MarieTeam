@@ -129,86 +129,48 @@
             </div>
 
             <!-- Affichage des détails de la traversée -->
-            
-            <?php if(!isset($_POST['traversee'])){
-               //  var_dump($traversee[0]['Depart']);
-                ?>
-                <div class="flex flex-col w-1/4 px-10 py-10 ml-10 max-h-min bg-white rounded-lg font-NeueMontrealBold text-black shadow-md border-2">
-                    <form action="./?action=reservation" method="post">
-                        <div class="flex justify-center pb-3 text-2xl">
-                            <h2>Détails de la traversée</h2>
-                        </div>
-
-                        <div class="flex justify-between py-2">
-                            <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Départ : <?php echo htmlspecialchars((string)$premiereTraversee['Depart'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($premiereTraversee['HeureDepart'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
-                            </div>
-                            <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Arrivée : <?php echo htmlspecialchars((string)$premiereTraversee['Arrivee'], ENT_QUOTES, 'UTF-8');?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($premiereTraversee['HeureArrivee'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="py-2 px-5 border rounded-lg my-5">
-                            <h3>Places disponibles</h3>
-                            <span>Passagers : <?php echo (int)$premiereTraversee['A Passager']; ?></span><br>
-                            <span>Véhicule < 2m : <?php echo (int)$premiereTraversee['B Véh.inf.2m']; ?></span><br>
-                            <span>Véhicule > 2m : <?php echo (int)$premiereTraversee['C Véh.sup.2m']; ?></span>
-                        </div>
-
-                        <input type="text" hidden name="bateauID" value="<?= htmlspecialchars($premiereTraversee['bateauID'])?>">
-                        <button type="submit" name="traverseeSelectionnee" value="<?php echo htmlspecialchars($premiereTraversee['Id'], ENT_QUOTES, 'UTF-8'); ?>" 
-                                class="w-full p-6 bg-blue-600 text-white rounded-lg hover:bg-opacity-80">Acheter mon billet</button>
-                    </form>
-                </div>
-                 
-        <?php } else { 
-            $traversee = getTraverseesById($_SESSION['traversee']);
-            ?>
-             <div class="flex flex-col w-1/4 px-10 py-10 ml-10 max-h-min bg-white rounded-lg font-NeueMontrealBold text-black shadow-md border-2">
-                    <form action="./?action=reservation" method="post">
-                        <div class="flex justify-center pb-3 text-2xl">
-                            <h2>Détails de la traversée</h2>
-                        </div>
-
-                        <div class="flex justify-between py-2">
-                            <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Départ : <?php echo htmlspecialchars((string)$traversee[0]['Depart'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureDepart'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
-                            </div>
-                            <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Arrivée : <?php echo htmlspecialchars((string)$traversee[0]['Arrivee'], ENT_QUOTES, 'UTF-8');?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureArrivee'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="py-2 px-5 border rounded-lg my-5">
-                            <h3>Places disponibles</h3>
-                            <span>Passagers : <?php echo (int)$traversee[0]['A Passager']; ?></span><br>
-                            <span>Véhicule < 2m : <?php echo (int)$traversee[0]['B Véh.inf.2m']; ?></span><br>
-                            <span>Véhicule > 2m : <?php echo (int)$traversee[0]['C Véh.sup.2m']; ?></span>
-                        </div>
-
-                        <input type="text" hidden name="bateauID" value="<?= htmlspecialchars($traversee[0]['bateauID'])?>">
-                        <button type="submit" name="traverseeSelectionnee" value="<?php echo htmlspecialchars($traversee[0]['Id'], ENT_QUOTES, 'UTF-8'); ?>" 
-                                class="w-full p-6 bg-blue-600 text-white rounded-lg hover:bg-opacity-80">Acheter mon billet</button>
-                    </form>
-                </div>
-       <?php }?>
-        
-        <?php } else { ?>
-            <div class="text-center font-NeueMontrealRegular">
-                <p>Aucune traversée disponible</p>
+            <?php
+if (isset($_SESSION['traversee'])) {
+    $traversee = getTraverseesById($_SESSION['traversee']);
+?>
+    <div class="flex flex-col w-1/4 px-10 py-10 ml-10 max-h-min bg-white rounded-lg font-NeueMontrealBold text-black shadow-md border-2">
+        <form action="./?action=reservation" method="post">
+            <div class="flex justify-center pb-3 text-2xl">
+                <h2>Détails de la traversée</h2>
             </div>
-        <?php } ?>
+
+            <div class="flex justify-between py-2">
+                <div class="border rounded-lg p-5 m-2 w-1/2">
+                    <h3>Départ : <?php echo htmlspecialchars((string)$traversee[0]['Depart'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                    <span class="opacity-50">
+                        <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureDepart'])), ENT_QUOTES, 'UTF-8'); ?>
+                    </span>
+                </div>
+                <div class="border rounded-lg p-5 m-2 w-1/2">
+                    <h3>Arrivée : <?php echo htmlspecialchars((string)$traversee[0]['Arrivee'], ENT_QUOTES, 'UTF-8');?></h3>
+                    <span class="opacity-50">
+                        <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureArrivee'])), ENT_QUOTES, 'UTF-8'); ?>
+                    </span>
+                </div>
+            </div>
+
+            <div class="py-2 px-5 border rounded-lg my-5">
+                <h3>Places disponibles</h3>
+                <span>Passagers : <?php echo (int)$traversee[0]['A Passager']; ?></span><br>
+                <span>Véhicule < 2m : <?php echo (int)$traversee[0]['B Véh.inf.2m']; ?></span><br>
+                <span>Véhicule > 2m : <?php echo (int)$traversee[0]['C Véh.sup.2m']; ?></span>
+            </div>
+
+            <input type="text" hidden name="bateauID" value="<?= htmlspecialchars($traversee[0]['bateauID'])?>">
+            <button type="submit" name="traverseeSelectionnee" value="<?php echo htmlspecialchars($traversee[0]['Id'], ENT_QUOTES, 'UTF-8'); ?>" 
+                    class="w-full p-6 bg-blue-600 text-white rounded-lg hover:bg-opacity-80">Acheter mon billet</button>
+        </form>
+    </div>
+<?php } else { ?>
+    <div class="text-center font-NeueMontrealRegular">
+        <p>Aucune traversée disponible</p>
+    </div>
+<?php } 
+}?>
     </div>
 </div>
