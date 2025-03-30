@@ -8,7 +8,6 @@ function inscriptionUtilisateur($nom, $prenom, $email, $mdp, $telephone){
                 VALUES (:nom, :prenom, :email, :mdp, :telephone)";
                 
         $query = $pdo->prepare($sql);
-
         $query->bindParam(':nom', $nom);
         $query->bindParam(':prenom', $prenom);
         $query->bindParam(':email', $email);
@@ -16,14 +15,12 @@ function inscriptionUtilisateur($nom, $prenom, $email, $mdp, $telephone){
         $query->bindParam(':telephone', $telephone);
 
         if ($query->execute()) {
-            echo "Données insérées avec succès.";
+            return $pdo->lastInsertId(); // Retourne l'ID de l'utilisateur inscrit
         } else {
-            echo "Erreur lors de l'insertion des données.";
+            return false;
         }
     } catch (PDOException $e) {
-        echo "Erreur de connexion ou d'exécution : " . $e->getMessage();
+        return false;
     }
 }
-
-
 ?>
