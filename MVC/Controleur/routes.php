@@ -20,6 +20,7 @@ function routes($chemin) {
     $lesChemins["panelTarifs"] = "panelTarifs.php";
     $lesChemins["ajoutTarif"] = "ajoutTarif.php";
     $lesChemins["editProfil"] = "editProfil.php";
+    $lesChemins["profilReservation"] = "profilReservation.php";
     if (array_key_exists($chemin, $lesChemins)) {
         return $lesChemins[$chemin];
     } 

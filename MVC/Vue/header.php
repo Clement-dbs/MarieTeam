@@ -25,7 +25,7 @@
                                 <a href="./?action=deconnexion" class="NeueMontrealBold">Déconnexion</a>
                             </button>
                             <button class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">
-                            <a href="#" class="NeueMontrealBold">Réservation</a>
+                            <a href="./?action=profilReservation" class="NeueMontrealBold">Réservation</a>
                             </button>
                             <?php if(getAdminLevel() >= 1){?>
                             <button class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">
