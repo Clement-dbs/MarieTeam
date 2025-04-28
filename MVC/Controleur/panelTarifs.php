@@ -8,27 +8,23 @@ function afficherTarifs($periodeSelectionnee = '', $liaisonSelectionnee = '') {
     try {
         $pdo = connexionDatabase();
 
-        // Préparation de la requête de base
-        $query = "SELECT 
-                    tarifer.*, 
-                    type.libelle AS type_libelle, 
-                    liaison.* 
-                  FROM tarifer
-                  JOIN type ON type.id = tarifer.num
-                  JOIN liaison ON liaison.code = tarifer.code
-                  WHERE 1";
+        // Requête avec jointure entre 'vue_tarifs' et 'periode' (par exemple)
+        $query = "SELECT vt.*, vl.*
+                  FROM vue_tarifs vt
+                  LEFT JOIN vue_liaisons vl ON vl.id_liaison = vl.id_liaison
+                  WHERE 1"; 
 
-        // Ajout du filtre par periode si sélectionnée
+        // Ajout du filtre par période si sélectionnée
         if ($periodeSelectionnee !== '') {
-            $query .= " AND tarifer.debut = :periode";
+            $query .= " AND vt.id_periode = :periode";
         }
 
         // Ajout du filtre par liaison si sélectionnée
         if ($liaisonSelectionnee !== '') {
-            $query .= " AND tarifer.code = :liaison";
+            $query .= " AND vt.id_liaison = :liaison";
         }
 
-        // Exécution de la requête avec les paramètres
+        // Préparation et exécution de la requête avec les paramètres
         $stmt = $pdo->prepare($query);
 
         if ($periodeSelectionnee !== '') {
@@ -49,14 +45,15 @@ function afficherTarifs($periodeSelectionnee = '', $liaisonSelectionnee = '') {
     }
 }
 
-$periodeSelectionnee = $_GET['periode'] ?? '';  // periode filtrée par l'utilisateur
+
+$periodeSelectionnee = $_GET['periode'] ?? '';  // période filtrée par l'utilisateur
 $liaisonSelectionnee = $_GET['liaison'] ?? '';  // Liaison filtrée par l'utilisateur
 
 // Récupérer les tarifs en fonction des filtres
 $tarifs = afficherTarifs($periodeSelectionnee, $liaisonSelectionnee);
 
-// Récupérer toutes les periodes et liaisons pour l'affichage dans le filtre
+// Récupérer toutes les périodes et liaisons pour l'affichage dans le filtre
 $periodes = recupererPeriodes();
-$liaisons = recupererLiaisons();  // Vous devez définir cette fonction pour récupérer les liaisons.
+$liaisons = recupererLiaisons();
 
 include "$racine/vue/panelTarifs.php";

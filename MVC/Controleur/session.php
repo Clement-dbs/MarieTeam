@@ -8,7 +8,7 @@ if(isset($_POST['secteur'])){
 
 if(isset($_POST['liaison'])){
     $_SESSION['liaison'] = $_POST['liaison'];
-    $codeLiaison = $_SESSION['liaison'];
+    $id_liaison = $_SESSION['liaison'];
 }
 
 if(isset($_POST['bateauID'])){
@@ -21,7 +21,7 @@ if (isset($_POST['dateDepart'])) {
 
 if(isset($_POST['traversee'])){
     $_SESSION['traversee'] = $_POST['traversee'];
-    $codeLiaison = $_SESSION['liaison'];
+    $id_liaison = $_SESSION['liaison'];
 }
 
 if (isset($_SESSION['dateDepart'])) {

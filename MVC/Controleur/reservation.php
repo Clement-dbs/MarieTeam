@@ -11,7 +11,7 @@ if(isset($_POST['btn_submit'])){
   $pdo = connexionDatabase(); // Assurez-vous que cette fonction retourne bien un objet PDO
 
   // Récupérer les informations du client depuis $_POST
-  $id_1 = $_SESSION['traversee'];
+  $id_traversee = $_SESSION['traversee'];
   $type = $_POST['type'] ?? null; // Récupération du type si utilisé
   $idBateau = $_SESSION['bateauID'];
   $utilisateur = $_SESSION['utilisateur'];
@@ -47,8 +47,8 @@ if(isset($_POST['btn_submit'])){
       try {
           // Requête d'insertion dans la table reservation
           $sqlReservation = "
-          INSERT INTO reservation (adulte, junior, enfant, voiture_4, voiture_5, fourgon, camping_car, camion, prix_total, id_1, utilisateur_id)
-          VALUES (:adulte, :junior, :enfant, :voiture_4, :voiture_5, :fourgon, :camping_car, :camion, :prix_total, :id_1, :utilisateur_id)";
+          INSERT INTO reservation (adulte, junior, enfant, voiture_4, voiture_5, fourgon, camping_car, camion, prix_total, id_traversee, utilisateur_id)
+          VALUES (:adulte, :junior, :enfant, :voiture_4, :voiture_5, :fourgon, :camping_car, :camion, :prix_total, :id_traversee, :utilisateur_id)";
           
           $stmtReservation = $pdo->prepare($sqlReservation);
           $stmtReservation->execute([            
@@ -61,7 +61,7 @@ if(isset($_POST['btn_submit'])){
               ':camping_car' => $camping_car,
               ':camion' => $camion,
               ':prix_total' => $prixTotal,
-              ':id_1' => $id_1,
+              ':id_traversee' => $id_traversee,
               'utilisateur_id' => $utilisateur_id
           ]);
       

@@ -7,10 +7,10 @@ function getReservations($userId, $type) {
         $sql = "";
 
         if ($type == 'future') {
-            $sql = "SELECT * FROM vue_reservations_traverse 
+            $sql = "SELECT * FROM vue_reservations_traversee 
                     WHERE utilisateur_id = :userId AND date >= CURDATE()";
         } elseif ($type == 'past') {
-            $sql = "SELECT * FROM vue_reservations_traverse 
+            $sql = "SELECT * FROM vue_reservations_traversee 
                     WHERE utilisateur_id = :userId AND date < CURDATE()";
         }
 

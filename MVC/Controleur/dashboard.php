@@ -58,7 +58,7 @@ function adminNbPeriode() {
 function adminNbTarif() {
     try {   
         $pdo = connexionDatabase();
-        $query = $pdo->prepare("SELECT COUNT(*) AS total FROM tarifer");
+        $query = $pdo->prepare("SELECT COUNT(*) AS total FROM tarif");
         $query->execute();        
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
