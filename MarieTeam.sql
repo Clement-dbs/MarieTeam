@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 28 avr. 2025 à 18:11
+-- Généré le : lun. 28 avr. 2025 à 19:51
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -45,7 +45,7 @@ CREATE TABLE `bateau` (
 --
 
 INSERT INTO `bateau` (`id`, `nom`, `longueur`, `largeur`, `A`, `A_Max`, `B`, `B_Max`, `C`, `C_Max`) VALUES
-(1, 'Le Vendéen', '120m', '20m', 105, 150, 82, 100, 60, 80),
+(1, 'Le Vendéen', '120m', '20m', 108, 150, 82, 100, 60, 80),
 (2, 'Le Méditerranéen', '140m', '22m', 120, 180, 90, 120, 70, 90);
 
 -- --------------------------------------------------------
@@ -168,6 +168,13 @@ CREATE TABLE `reservation` (
   `id_traversee` int(11) NOT NULL,
   `utilisateur_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `reservation`
+--
+
+INSERT INTO `reservation` (`id`, `adulte`, `junior`, `enfant`, `voiture_4`, `voiture_5`, `fourgon`, `camping_car`, `camion`, `prix_total`, `date`, `id_traversee`, `utilisateur_id`) VALUES
+(4, 3, 0, 0, 0, 0, 0, 0, 0, 360, '2025-04-28 17:41:15', 7, 4);
 
 -- --------------------------------------------------------
 
@@ -312,6 +319,34 @@ CREATE TABLE `vue_liaisons` (
 -- --------------------------------------------------------
 
 --
+-- Doublure de structure pour la vue `vue_reservations`
+-- (Voir ci-dessous la vue réelle)
+--
+CREATE TABLE `vue_reservations` (
+`id_reservation` int(11)
+,`adulte` int(11)
+,`junior` int(11)
+,`enfant` int(11)
+,`voiture_4` int(11)
+,`voiture_5` int(11)
+,`fourgon` int(11)
+,`camping_car` int(11)
+,`camion` int(11)
+,`prix_total` int(11)
+,`date_reservation` timestamp
+,`utilisateur_id` int(11)
+,`id_traversee` int(11)
+,`date_depart` timestamp
+,`date_arrivee` timestamp
+,`id_bateau` int(11)
+,`id_liaison` int(11)
+,`port_depart` varchar(50)
+,`port_arrivee` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Doublure de structure pour la vue `vue_tarifs`
 -- (Voir ci-dessous la vue réelle)
 --
@@ -360,6 +395,15 @@ CREATE TABLE `vue_traversees` (
 DROP TABLE IF EXISTS `vue_liaisons`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_liaisons`  AS SELECT `l`.`id` AS `id_liaison`, `l`.`distance` AS `distance`, `p_depart`.`nom` AS `port_depart`, `p_arrive`.`nom` AS `port_arrive`, `l`.`id_secteur` AS `id_secteur` FROM (((`liaison` `l` join `port` `p_depart` on(`l`.`port_depart` = `p_depart`.`id`)) join `port` `p_arrive` on(`l`.`port_arrive` = `p_arrive`.`id`)) join `secteur` `s` on(`l`.`id_secteur` = `s`.`id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la vue `vue_reservations`
+--
+DROP TABLE IF EXISTS `vue_reservations`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_reservations`  AS SELECT `r`.`id` AS `id_reservation`, `r`.`adulte` AS `adulte`, `r`.`junior` AS `junior`, `r`.`enfant` AS `enfant`, `r`.`voiture_4` AS `voiture_4`, `r`.`voiture_5` AS `voiture_5`, `r`.`fourgon` AS `fourgon`, `r`.`camping_car` AS `camping_car`, `r`.`camion` AS `camion`, `r`.`prix_total` AS `prix_total`, `r`.`date` AS `date_reservation`, `r`.`utilisateur_id` AS `utilisateur_id`, `t`.`id` AS `id_traversee`, `t`.`depart` AS `date_depart`, `t`.`arrive` AS `date_arrivee`, `t`.`id_bateau` AS `id_bateau`, `t`.`id_liaison` AS `id_liaison`, `p_depart`.`nom` AS `port_depart`, `p_arrive`.`nom` AS `port_arrivee` FROM ((((`reservation` `r` join `traversee` `t` on(`r`.`id_traversee` = `t`.`id`)) join `liaison` `l` on(`t`.`id_liaison` = `l`.`id`)) join `port` `p_depart` on(`l`.`port_depart` = `p_depart`.`id`)) join `port` `p_arrive` on(`l`.`port_arrive` = `p_arrive`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -512,7 +556,7 @@ ALTER TABLE `port`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `secteur`
