@@ -26,8 +26,8 @@
                 // Exemple de données (remplacer par des données dynamiques depuis la base)
                 foreach ($reservationsPrevues as $reservation):?>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($reservation['reservation_id']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date']); ?></td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($reservation['id_reservation']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date_depart']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['port_depart'].' - '.$reservation['port_arrivee']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['adulte']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['junior']); ?></td>
@@ -70,8 +70,8 @@
                 // Exemple de données (remplacer par des données dynamiques depuis la base)
                 foreach ($reservationsPassees as $reservation):?>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($reservation['reservation_id']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date']); ?></td>
+                            <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($reservation['id_reservation']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date_depart']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['port_depart'].' - '.$reservation['port_arrivee']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['adulte']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['junior']); ?></td>
@@ -81,7 +81,8 @@
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['fourgon']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camping_car']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camion']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['prix_total'].' €'); ?></td>                                                      
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['prix_total'].' €'); ?></td>
+                                                      
                         </tr>
                 <?php endforeach; ?>
             </tbody>
