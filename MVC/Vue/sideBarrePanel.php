@@ -8,7 +8,6 @@
         <a href="./?action=panelPeriode" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Période</a>
         <a href="./?action=panelBateau" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Bateau</a>
         <a href="./?action=panelTarifs" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Tarifs</a>
-        <a href="./?action=panelLiaison" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Liaison</a>
         <a href="./?action=gestionUtilisateurs" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Gestion des utilisateurs</a>
       </nav>
     </aside>

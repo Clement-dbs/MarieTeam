@@ -7,11 +7,11 @@ function getReservations($userId, $type) {
         $sql = "";
 
         if ($type == 'future') {
-            $sql = "SELECT * FROM vue_reservations
-                    WHERE utilisateur_id = :userId AND date_depart >= CURDATE()";
+            $sql = "SELECT * FROM vue_reservation
+                    WHERE id_utilisateur = :userId AND date >= CURDATE()";
         } elseif ($type == 'past') {
-            $sql = "SELECT * FROM vue_reservations
-                    WHERE utilisateur_id = :userId AND date_depart < CURDATE()";
+            $sql = "SELECT * FROM vue_reservation
+                    WHERE id_utilisateur = :userId AND date < CURDATE()";
         }
 
         $query = $pdo->prepare($sql);
