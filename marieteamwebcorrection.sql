@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 02 mai 2025 à 14:58
+-- Généré le : ven. 02 mai 2025 à 22:24
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -140,11 +140,18 @@ INSERT INTO `liaison` (`id`, `distance`, `port_arrive`, `port_depart`, `id_secte
 --
 
 CREATE TABLE `passager` (
-  `id` int(11) NOT NULL,
   `quantite` int(11) NOT NULL,
   `id_reservation` int(11) NOT NULL,
   `id_type_passager` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `passager`
+--
+
+INSERT INTO `passager` (`quantite`, `id_reservation`, `id_type_passager`) VALUES
+(2, 156, 1),
+(2, 157, 1);
 
 -- --------------------------------------------------------
 
@@ -212,37 +219,8 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id`, `prix_total`, `date`, `id_traversee`, `id_utilisateur`) VALUES
-(62, 100, '2025-04-29 17:42:37', 1, 3),
-(63, 30, '2025-04-29 17:42:43', 1, 3),
-(64, 160, '2025-04-29 17:42:48', 1, 3),
-(65, 30, '2025-04-29 17:42:52', 1, 3),
-(66, 30, '2025-04-29 17:57:46', 1, 3),
-(67, 30, '2025-04-29 17:57:56', 1, 3),
-(68, 1080, '2025-04-29 17:58:05', 1, 3),
-(69, 1080, '2025-04-29 17:58:52', 1, 3),
-(70, 1080, '2025-04-29 17:59:11', 1, 3),
-(71, 1080, '2025-04-29 17:59:16', 1, 3),
-(72, 1080, '2025-04-29 19:44:35', 1, 3),
-(73, 50, '2025-04-29 19:44:37', 1, 3),
-(74, 50, '2025-04-29 19:59:05', 1, 3),
-(75, 50, '2025-04-29 19:59:23', 1, 3),
-(76, 50, '2025-04-29 19:59:30', 1, 3),
-(77, 50, '2025-04-29 20:01:30', 1, 3),
-(78, 50, '2025-04-29 20:01:32', 1, 3),
-(79, 50, '2025-04-29 20:01:39', 1, 3),
-(80, 50, '2025-04-29 20:11:10', 1, 3),
-(81, 50, '2025-04-29 20:15:16', 1, 3),
-(82, 50, '2025-04-29 20:16:43', 1, 3),
-(83, 50, '2025-04-29 20:16:45', 1, 3),
-(84, 50, '2025-04-29 20:16:53', 1, 3),
-(85, 50, '2025-04-29 20:17:16', 1, 3),
-(86, 50, '2025-04-29 20:22:28', 1, 3),
-(87, 50, '2025-04-29 20:24:23', 1, 3),
-(88, 50, '2025-04-29 20:25:01', 1, 3),
-(89, 50, '2025-04-29 20:25:34', 1, 3),
-(90, 50, '2025-04-29 20:26:04', 1, 3),
-(91, 50, '2025-04-29 20:26:50', 1, 3),
-(92, 50, '2025-04-29 20:26:57', 1, 3);
+(156, 36, '2025-05-02 19:10:08', 1, 4),
+(157, 10, '2025-05-02 19:11:02', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -284,14 +262,14 @@ CREATE TABLE `tarif` (
 --
 
 INSERT INTO `tarif` (`id`, `id_liaison`, `id_periode`, `id_type_passager`, `id_type_vehicule`, `tarif`) VALUES
-(4, 1, 1, 1, NULL, 18.00),
-(5, 1, 1, 2, NULL, 11.10),
-(6, 1, 1, 3, NULL, 5.60),
-(7, 1, 1, NULL, 1, 86.00),
-(8, 1, 1, NULL, 2, 129.00),
-(9, 1, 1, NULL, 3, 189.00),
-(10, 1, 1, NULL, 4, 205.00),
-(11, 1, 1, NULL, 5, 268.00);
+(4, 1, 1, 1, NULL, 5.00),
+(5, 1, 1, 2, NULL, 12.00),
+(6, 1, 1, 3, NULL, 22.00),
+(7, 1, 1, NULL, 4, 86.00),
+(8, 1, 1, NULL, 5, 129.00),
+(9, 1, 1, NULL, 6, 189.00),
+(10, 1, 1, NULL, 7, 205.00),
+(11, 1, 1, NULL, 8, 268.00);
 
 -- --------------------------------------------------------
 
@@ -332,9 +310,9 @@ CREATE TABLE `type_passager` (
 --
 
 INSERT INTO `type_passager` (`id`, `libelle`, `id_categorie`) VALUES
-(1, 'enfant', 1),
-(2, 'junior', 1),
-(3, 'adulte', 1);
+(1, 'Enfant', 1),
+(2, 'Junior', 1),
+(3, 'Adulte', 1);
 
 -- --------------------------------------------------------
 
@@ -353,11 +331,11 @@ CREATE TABLE `type_vehicule` (
 --
 
 INSERT INTO `type_vehicule` (`id`, `libelle`, `id_categorie`) VALUES
-(1, 'voiture_inf_4m', 2),
-(2, 'voiture_inf_5m', 2),
-(3, 'fourgon', 3),
-(4, 'camping_car', 3),
-(5, 'camion', 3);
+(4, 'Voiture inférieur à 4 m', 2),
+(5, 'Voiture inférieur à 5 m', 2),
+(6, 'Fourgon', 3),
+(7, 'Camping Car', 3),
+(8, 'Camion', 3);
 
 -- --------------------------------------------------------
 
@@ -381,8 +359,9 @@ CREATE TABLE `utilisateur` (
 
 INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `email`, `mdp`, `telephone`, `isAdmin`) VALUES
 (1, 'Dupont', 'Jean', 'jean.dupont@example.com', 'hashed_mdp', '0601020304', 0),
-(2, 'Martin', 'Lucie', 'lucie.martin@example.com', 'hashed_mdp', '0605060708', 1),
-(3, 'Dubois', 'Clément', 'contact.clementdbs@gmail.com', '$2y$10$MgEJI6OKor1Mi05iceDFTOUQ/D46njsRtYn0dqtiMML3qwh3t2KHS', '0642852548', NULL);
+(2, 'Martin', 'Lucie', 'lucie.martin@example.com', '1', '0605060708', 1),
+(3, 'Dubois', 'Clément', 'contact.clementdbs@gmail.com', '$2y$10$MgEJI6OKor1Mi05iceDFTOUQ/D46njsRtYn0dqtiMML3qwh3t2KHS', '0642852548', NULL),
+(4, 'Dubois', 'Clement', 'contact.clement@gmail.com', '$2y$10$CQK2aUaE3dgUhsrPkpdTiu1n8w/JS7ItR.D62fLQk.DAc0AAMFwt2', '0642852548', 1);
 
 -- --------------------------------------------------------
 
@@ -391,11 +370,45 @@ INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `email`, `mdp`, `telephone`, `
 --
 
 CREATE TABLE `vehicule` (
-  `id` int(11) NOT NULL,
   `quantite` int(11) NOT NULL,
   `id_reservation` int(11) NOT NULL,
   `id_type_vehicule` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Doublure de structure pour la vue `vue_liaisons`
+-- (Voir ci-dessous la vue réelle)
+--
+CREATE TABLE `vue_liaisons` (
+`id_liaison` int(11)
+,`distance` decimal(15,2)
+,`port_depart` varchar(50)
+,`port_arrive` varchar(50)
+,`id_secteur` int(11)
+,`nom_secteur` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Doublure de structure pour la vue `vue_reservation`
+-- (Voir ci-dessous la vue réelle)
+--
+CREATE TABLE `vue_reservation` (
+`id_reservation` int(11)
+,`date` timestamp
+,`prix_total` int(11)
+,`id_utilisateur` int(11)
+,`id_traversee` int(11)
+,`port_depart` varchar(50)
+,`port_arrive` varchar(50)
+,`id_type_passager` int(11)
+,`quantite_passager` int(11)
+,`id_type_vehicule` int(11)
+,`quantite_vehicule` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -405,11 +418,34 @@ CREATE TABLE `vehicule` (
 --
 CREATE TABLE `vue_traversee` (
 `id_traversee` int(11)
-,`depart` timestamp
-,`arrive` timestamp
+,`date_depart` timestamp
+,`date_arrive` timestamp
 ,`id_liaison` int(11)
+,`depart` varchar(50)
+,`arrive` varchar(50)
 ,`id_bateau` int(11)
+,`places_passager_restantes` decimal(33,0)
+,`places_vehicule_leger_restantes` decimal(33,0)
+,`places_vehicule_lourd_restantes` decimal(33,0)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la vue `vue_liaisons`
+--
+DROP TABLE IF EXISTS `vue_liaisons`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_liaisons`  AS SELECT `l`.`id` AS `id_liaison`, `l`.`distance` AS `distance`, `p_depart`.`nom` AS `port_depart`, `p_arrive`.`nom` AS `port_arrive`, `l`.`id_secteur` AS `id_secteur`, `s`.`nom` AS `nom_secteur` FROM (((`liaison` `l` join `port` `p_depart` on(`l`.`port_depart` = `p_depart`.`id`)) join `port` `p_arrive` on(`l`.`port_arrive` = `p_arrive`.`id`)) join `secteur` `s` on(`l`.`id_secteur` = `s`.`id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la vue `vue_reservation`
+--
+DROP TABLE IF EXISTS `vue_reservation`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_reservation`  AS SELECT `r`.`id` AS `id_reservation`, `r`.`date` AS `date`, `r`.`prix_total` AS `prix_total`, `r`.`id_utilisateur` AS `id_utilisateur`, `r`.`id_traversee` AS `id_traversee`, `port_depart`.`nom` AS `port_depart`, `port_arrive`.`nom` AS `port_arrive`, `p`.`id_type_passager` AS `id_type_passager`, `p`.`quantite` AS `quantite_passager`, `v`.`id_type_vehicule` AS `id_type_vehicule`, `v`.`quantite` AS `quantite_vehicule` FROM ((((((`reservation` `r` left join `passager` `p` on(`r`.`id` = `p`.`id_reservation`)) left join `vehicule` `v` on(`r`.`id` = `v`.`id_reservation`)) join `traversee` `t` on(`r`.`id_traversee` = `t`.`id`)) join `liaison` `l` on(`t`.`id_liaison` = `l`.`id`)) join `port` `port_depart` on(`l`.`port_depart` = `port_depart`.`id`)) join `port` `port_arrive` on(`l`.`port_arrive` = `port_arrive`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -418,7 +454,7 @@ CREATE TABLE `vue_traversee` (
 --
 DROP TABLE IF EXISTS `vue_traversee`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_traversee`  AS SELECT `t`.`id` AS `id_traversee`, `t`.`depart` AS `depart`, `t`.`arrive` AS `arrive`, `t`.`id_liaison` AS `id_liaison`, `l`.`id_bateau` AS `id_bateau` FROM (`traversee` `t` join `liaison` `l` on(`t`.`id_liaison` = `l`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_traversee`  AS SELECT `t`.`id` AS `id_traversee`, `t`.`depart` AS `date_depart`, `t`.`arrive` AS `date_arrive`, `t`.`id_liaison` AS `id_liaison`, `pd`.`nom` AS `depart`, `pa`.`nom` AS `arrive`, `l`.`id_bateau` AS `id_bateau`, `b`.`place_passager_max`- coalesce((select sum(`p`.`quantite`) from (((`reservation` `r` join `passager` `p` on(`r`.`id` = `p`.`id_reservation`)) join `type_passager` `tp` on(`p`.`id_type_passager` = `tp`.`id`)) join `categorie` `c` on(`tp`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'A'),0) AS `places_passager_restantes`, `b`.`place_vehicule_leger_max`- coalesce((select sum(`v`.`quantite`) from (((`reservation` `r` join `vehicule` `v` on(`r`.`id` = `v`.`id_reservation`)) join `type_vehicule` `tv` on(`v`.`id_type_vehicule` = `tv`.`id`)) join `categorie` `c` on(`tv`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'B'),0) AS `places_vehicule_leger_restantes`, `b`.`place_vehicule_lourd_max`- coalesce((select sum(`v`.`quantite`) from (((`reservation` `r` join `vehicule` `v` on(`r`.`id` = `v`.`id_reservation`)) join `type_vehicule` `tv` on(`v`.`id_type_vehicule` = `tv`.`id`)) join `categorie` `c` on(`tv`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'C'),0) AS `places_vehicule_lourd_restantes` FROM ((((`traversee` `t` join `liaison` `l` on(`t`.`id_liaison` = `l`.`id`)) join `bateau` `b` on(`l`.`id_bateau` = `b`.`id`)) join `port` `pd` on(`l`.`port_depart` = `pd`.`id`)) join `port` `pa` on(`l`.`port_arrive` = `pa`.`id`)) ;
 
 --
 -- Index pour les tables déchargées
@@ -465,7 +501,6 @@ ALTER TABLE `liaison`
 -- Index pour la table `passager`
 --
 ALTER TABLE `passager`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `passager_ibfk_2` (`id_type_passager`),
   ADD KEY `passager_ibfk_1` (`id_reservation`);
 
@@ -503,8 +538,8 @@ ALTER TABLE `tarif`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_liaison` (`id_liaison`),
   ADD KEY `id_periode` (`id_periode`),
-  ADD KEY `id_type_passager` (`id_type_passager`),
-  ADD KEY `id_type_vehicule` (`id_type_vehicule`);
+  ADD KEY `tarif_ibfk_4` (`id_type_vehicule`),
+  ADD KEY `tarif_ibfk_2` (`id_type_passager`);
 
 --
 -- Index pour la table `traversee`
@@ -540,7 +575,6 @@ ALTER TABLE `utilisateur`
 -- Index pour la table `vehicule`
 --
 ALTER TABLE `vehicule`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `id_reservation` (`id_reservation`),
   ADD KEY `id_type_vehicule` (`id_type_vehicule`);
 
@@ -579,12 +613,6 @@ ALTER TABLE `liaison`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pour la table `passager`
---
-ALTER TABLE `passager`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT pour la table `periode`
 --
 ALTER TABLE `periode`
@@ -600,7 +628,7 @@ ALTER TABLE `port`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT pour la table `secteur`
@@ -630,19 +658,13 @@ ALTER TABLE `type_passager`
 -- AUTO_INCREMENT pour la table `type_vehicule`
 --
 ALTER TABLE `type_vehicule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `vehicule`
---
-ALTER TABLE `vehicule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées
@@ -695,7 +717,7 @@ ALTER TABLE `reservation`
 --
 ALTER TABLE `tarif`
   ADD CONSTRAINT `tarif_ibfk_1` FOREIGN KEY (`id_liaison`) REFERENCES `liaison` (`id`),
-  ADD CONSTRAINT `tarif_ibfk_2` FOREIGN KEY (`id_periode`) REFERENCES `periode` (`id`),
+  ADD CONSTRAINT `tarif_ibfk_2` FOREIGN KEY (`id_type_passager`) REFERENCES `type_passager` (`id`),
   ADD CONSTRAINT `tarif_ibfk_3` FOREIGN KEY (`id_type_passager`) REFERENCES `type_passager` (`id`),
   ADD CONSTRAINT `tarif_ibfk_4` FOREIGN KEY (`id_type_vehicule`) REFERENCES `type_vehicule` (`id`);
 
