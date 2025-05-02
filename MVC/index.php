@@ -16,8 +16,8 @@
     <?php
         include_once "racine.php";
         include_once "$racine/Controleur/routes.php";
-        include_once "Modele/function.php";
-        include_once "Controleur/session.php";
+        include_once "$racine/Modele/function.php";
+        include_once "$racine/Controleur/session.php";
         include 'Vue/header.php';
       
         if (isset($_GET["action"])) {

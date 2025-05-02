@@ -5,7 +5,7 @@
     <div class="flex text-left">
         <?php 
         
-        if (isset($_SESSION['utilisateur']) && !empty($_SESSION['utilisateur'])) { ?>
+        if (isset($_SESSION['utilisateur']) && is_array($_SESSION['utilisateur']) && !empty($_SESSION['utilisateur'])) { ?>
             <div class="relative inline-block text-left">
                 <div>
                     <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleMenu()">
@@ -25,7 +25,7 @@
                                 <a href="./?action=deconnexion" class="NeueMontrealBold">Déconnexion</a>
                             </button>
                             <button class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">
-                            <a href="#" class="NeueMontrealBold">Réservation</a>
+                            <a href="./?action=profilReservation" class="NeueMontrealBold">Réservation</a>
                             </button>
                             <?php if(getAdminLevel() >= 1){?>
                             <button class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">

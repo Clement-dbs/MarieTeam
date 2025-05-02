@@ -1,5 +1,11 @@
 <div class="flex items-center flex-col">
   <h2 class="text-2xl font-semibold text-center text-gray-800 my-10">Formulaire d'inscription</h2>
+
+  <!-- Affichage des erreurs -->
+  <?php if (!empty($message)): ?>
+    <p class="text-red-500 text-sm text-center mb-4"><?php echo $message; ?></p>
+  <?php endif; ?>
+
   <form action="" method="POST" class="rounded-lg shadow-md p-8">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
       <div>
@@ -21,6 +27,7 @@
       <div>
         <label for="mdp" class="text-sm font-medium text-gray-700">Mot de passe*</label>
         <input type="password" id="mdp" name="mdp" class="p-2 w-full border rounded-md shadow-sm" required>
+        <small class="text-gray-500">8 caractères min, 1 majuscule, 1 chiffre, 1 caractère spécial</small>
       </div>
       <div>
         <label for="confirm_mdp" class="text-sm font-medium text-gray-700">Confirmer le mot de passe*</label>

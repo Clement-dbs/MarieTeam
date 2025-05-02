@@ -7,17 +7,20 @@ include_once "connexion_db.php";
            
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
-                SELECT nom
+                SELECT *
                 FROM secteur 
-                ORDER BY nom ASC
             ");
     
             $query->execute();
+            $secteurs = [];
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-                $secteur [] = $row['nom'];
+                $secteurs[] = [
+                    'id' => $row['id'],
+                    'nom' => $row['nom']
+                ];
             }
-
-            return $secteur;
+    
+            return $secteurs;
         } 
         
         catch (PDOException $e) {
@@ -26,24 +29,26 @@ include_once "connexion_db.php";
        
     } 
 
-    function getLiaisons($secteur){
+   function getLiaisons($secteur){
         try {
 
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
-                SELECT *
-                FROM liaison
-                JOIN secteur ON liaison.secteur = secteur.id
-                WHERE secteur.nom = '$secteur'
+                SELECT l.id AS id_liaison, p1.nom AS port_depart_nom, p2.nom AS port_arrive_nom
+                FROM liaison l
+                INNER JOIN port p1 ON l.port_depart = p1.id
+                INNER JOIN port p2 ON l.port_arrive = p2.id
+                WHERE l.id_secteur = :secteur
+                ORDER BY p1.nom ASC, p2.nom ASC
             ");
           
-            $query->execute();
+            $query->execute(['secteur' => $secteur]);
     
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                 $liaisons[] = [
-                    'PortDepart' => $row['port_depart'],
-                    'PortArrivee' => $row['port_arrivee'],
-                    'CodeLiaison' => $row['code']
+                    'PortDepart' => $row['port_depart_nom'],
+                    'PortArrivee' => $row['port_arrive_nom'],
+                    'id_liaison' => $row['id_liaison']
                  ];
                   }
                 
@@ -58,34 +63,31 @@ include_once "connexion_db.php";
         }
     }
 
-    function getTraversees($codeLiaison){
+    function getTraversees($id_liaison, $dateDepart){
         try {
 
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
-            SELECT Traversee.id, Traversee.codeLiaison, Traversee.heureDepart,Traversee.heureArrivee, Traversee.jour, Traversee.bateau, Bateau.nom, Bateau.A, Bateau.B, Bateau.C, Liaison.port_depart, Liaison.port_arrivee 
-            FROM Traversee 
-            JOIN Liaison ON Traversee.codeLiaison = Liaison.code 
-            JOIN Bateau ON Traversee.bateau = Bateau.id 
-            WHERE Traversee.codeLiaison = '$codeLiaison';
+                SELECT *
+                FROM vue_traversee
+                WHERE id_liaison = '$id_liaison'
+                AND DATE(depart) = '$dateDepart'
        ");
       
             $query->execute();
     
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                 $traversees [] = [
-                    'Id' =>  $row['id'],
-                    'CodeLiaison' =>  $row['codeLiaison'],
-                    'Depart' =>  $row['port_depart'],
-                    'Arrivee' =>  $row['port_arrivee'],
-                    'HeureDepart' => $row['heureDepart'],
-                    'HeureArrivee' => $row['heureArrivee'],
-                    'Jour' => $row['jour'],
-                    'Bateau' =>  $row['nom'],   
-                    'A Passager' => $row['A'],
-                    'B Véh.inf.2m' => $row['B'],
-                    'C Véh.sup.2m' =>  $row['C']  
+                    'id' =>  $row['id_traversee'],
+                    'depart' =>  $row['depart'],
+                    'arrive' =>  $row['arrive'],
+                    'id_liaison' => $row['id_liaison'],
+                    'id_bateau' =>  $row['id_bateau'],
+                    'Place Passager' =>  $row['places_passager_restantes'],
+                    'Placer Véhicule Léger' =>  $row['places_vehicule_leger_restantes'],
+                    'Place Véhicule Lourd' =>  $row['places_vehicule_lourd_restantes'],
                 ];
+
                   }
 
                   if(empty($traversees)){
@@ -104,29 +106,23 @@ include_once "connexion_db.php";
         try {
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
-            SELECT Traversee.id, Traversee.codeLiaison, Traversee.heureDepart, Traversee.heureArrivee , Traversee.jour, Traversee.bateau, Bateau.nom, Bateau.A, Bateau.B, Bateau.C, Liaison.port_depart, Liaison.port_arrivee 
-            FROM Traversee 
-            JOIN Liaison ON Traversee.codeLiaison = Liaison.code 
-            JOIN Bateau ON Traversee.bateau = Bateau.id 
-            WHERE Traversee.id = '$id';
+            SELECT *
+            FROM vue_traversee
+            WHERE id_traversee = '$id';
        ");
       
             $query->execute();
     
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                 $traversees [] = [
-                    'Id' =>  $row['id'],
-                    'CodeLiaison' =>  $row['codeLiaison'],
-                    'Depart' =>  $row['port_depart'],
-                    'Arrivee' =>  $row['port_arrivee'],
-                    'HeureDepart' => $row['heureDepart'],
-                    'HeureArrivee' => $row['heureArrivee'],
-                    'Jour' => $row['jour'],
-                    'bateauID' =>  $row['bateau'],
-                    'Bateau' =>  $row['nom'],   
-                    'A Passager' => $row['A'],
-                    'B Véh.inf.2m' => $row['B'],
-                    'C Véh.sup.2m' =>  $row['C']  
+                   'id' =>  $row['id_traversee'],
+                    'depart' =>  $row['depart'],
+                    'arrive' =>  $row['arrive'],
+                    'id_liaison' => $row['id_liaison'],
+                    'id_bateau' =>  $row['id_bateau'],
+                    'Place Passager' =>  $row['places_passager_restantes'],
+                    'Place Véhicule Léger' =>  $row['places_vehicule_leger_restantes'],
+                    'Place Véhicule Lourd' =>  $row['places_vehicule_lourd_restantes'],
                 ];
                   }
 
@@ -142,11 +138,105 @@ include_once "connexion_db.php";
         }
     }
 
+    function getTypeVoyageurs(){
+        try{
+
+        $pdo = connexionDatabase();
+        
+            // On récupère les type de passagers
+            $query = $pdo->prepare("
+                SELECT *
+                FROM type_passager
+            ");
+      
+            $query->execute();
+    
+            $typeVoyageur = [];
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                $typeVoyageur [] = [
+                    'id' => $row['id'],
+                    'libelle' => $row['libelle'],
+                    'categorie' => $row['id_categorie'],
+                ];
+                  }
+
+            // On récupère les type de véhicules
+                  $query = $pdo->prepare("
+                  SELECT *
+                  FROM type_vehicule
+              ");
+        
+              $query->execute();
+      
+              while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                  $typeVoyageur [] = [
+                      'id' => $row['id'],
+                      'libelle' => $row['libelle'],
+                      'categorie' => $row['id_categorie']
+                  ];
+                    }
+    
+                return $typeVoyageur;
+        } 
+        catch (PDOException $e) {
+            die("Une erreur s'est produite lors de la récupération des tarifs : " . $e->getMessage());
+        }
+    
+    }
+
+    function getPlacesRestantesBateau($idTraversee){
+        try {
+            $pdo = connexionDatabase();
+    
+            $query = $pdo->prepare("
+                SELECT 
+                    vt.id_traversee,
+                    b.id AS id_bateau,
+                    b.place_passager_max - COALESCE(SUM(CASE WHEN c.libelle = 'A' THEN p.quantite ELSE 0 END), 0) AS places_passager_restantes,
+                    b.place_vehicule_leger_max - COALESCE(SUM(CASE WHEN c.libelle = 'B' THEN v.quantite ELSE 0 END), 0) AS places_vehicule_leger_restantes,
+                    b.place_vehicule_lourd_max - COALESCE(SUM(CASE WHEN c.libelle = 'C' THEN v.quantite ELSE 0 END), 0) AS places_vehicule_lourd_restantes
+                FROM vue_traversee vt
+                JOIN bateau b ON vt.id_bateau = b.id
+                LEFT JOIN reservation r ON r.id_traversee = vt.id_traversee
+                LEFT JOIN passager p ON p.id_reservation = r.id
+                LEFT JOIN type_passager tp ON p.id_type_passager = tp.id
+                LEFT JOIN vehicule v ON v.id_reservation = r.id
+                LEFT JOIN type_vehicule tv ON v.id_type_vehicule = tv.id
+                LEFT JOIN categorie c ON c.id = COALESCE(tp.id_categorie, tv.id_categorie)
+                WHERE vt.id_traversee = :id
+                GROUP BY 
+                    vt.id_traversee, b.id, 
+                    b.place_passager_max, 
+                    b.place_vehicule_leger_max, 
+                    b.place_vehicule_lourd_max
+            ");
+    
+            $query->bindParam(':id', $idTraversee, PDO::PARAM_INT);
+            $query->execute();
+    
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+    
+            if (!$result) {
+                return "";
+            }
+    
+            return [
+                'id' => $result['id_traversee'],
+                'id_bateau' => $result['id_bateau'],
+                'Place Passager' => $result['places_passager_restantes'],
+                'Place Véhicule Léger' => $result['places_vehicule_leger_restantes'],
+                'Place Véhicule Lourd' => $result['places_vehicule_lourd_restantes'],
+            ];
+        } catch (PDOException $e) {
+            die("Erreur lors de la récupération des places restantes : " . $e->getMessage());
+        }
+    }
+
     function getTarif(){
         try {
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
-                SELECT TypeTarif, Categorie, tarif
+                SELECT *
                 FROM tarif
             ");
       
@@ -154,9 +244,10 @@ include_once "connexion_db.php";
     
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                 $tarifs [] = [
-                    'TypeTarif' => $row['TypeTarif'],
-                    'Tarif' => $row['tarif'],
-                    'Categorie' => $row['Categorie']
+                    'id' => $row['id'],
+                    'id_liaison' => $row['id_liaison'],
+                    'id_periode' => $row['id_periode'],
+                    'tarif' => $row['tarif']
                 ];
                   }
     
@@ -219,60 +310,47 @@ include_once "connexion_db.php";
         }
     }
 
-    /* import Bastien */
+    
 
-    function ajouterOccupant() {
-        try {
-            $pdo = connexionDatabase();
-
-            $query = $pdo->prepare("UPDATE Bateau SET $categorie = ? WHERE lettre = ?");
-            $query->bindParam(':lettre_bateau', $lettre_bateau, PDO::PARAM_STR);
-            $query->execute();
-
-        } catch (PDOException $e) {
-            die("Une erreur s'est produite : " . $e->getMessage());
-        }
-
-    }
-
-    function getPeriodes() {
+    /*function getPeriodes() {
         try {
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
-            SELECT DISTINCT debut 
-            FROM tarifer 
-            ORDER BY debut
+            SELECT id_periode 
+            FROM tarif 
+            ORDER BY id_periode
             ");
             $query->execute();
             return $query->fetchAll(PDO::FETCH_COLUMN);
         } catch (PDOException $e) {
             die("Erreur lors de la récupération des periodes : " . $e->getMessage());
         }
-    }
+    }*/
 
-    function getTarifsByPeriode($periodeSelectionnee) {
+    /*function getTarifsByPeriode($periodeSelectionnee) {
+
         if (isset($_SESSION['idPeriode'])) {
             $idPeriode = $_SESSION['idPeriode'];
             try {
                 $pdo = connexionDatabase();
     
                 // Récupérer les informations de la periode
-                $query = $pdo->prepare("SELECT debut, fin FROM periode WHERE id = :id");
+                $query = $pdo->prepare("SELECT dateDebut, dateFin FROM periode WHERE id = :id");
                 $query->bindParam(':id', $idPeriode, PDO::PARAM_INT);
                 $query->execute();
                 $periodeData = $query->fetch(PDO::FETCH_ASSOC);
                 if ($periodeData) {
-                    $periode1D = $periodeData['debut'];
-                    $periode1F = $periodeData['fin'];
+                    $periode1D = $periodeData['dateDebut'];
+                    $periode1F = $periodeData['dateFin'];
     
                     if ($periodeSelectionnee >= $periode1D && $periodeSelectionnee <= $periode1F) {
                         // Récupérer les tarifs
                         $query = $pdo->prepare("
-                            SELECT debut, num, code, tarif
-                            FROM tarifer
-                            WHERE debut = :periode
+                            SELECT id_periode, id_type, tarif
+                            FROM tarif
+                            WHERE id_periode = :periode
                         ");
-                        $query->bindParam(':periode', $periode1D, PDO::PARAM_STR);
+                        $query->bindParam(':periode', $idPeriode, PDO::PARAM_INT);
                         $query->execute();
     
                         $labels = [
@@ -290,9 +368,9 @@ include_once "connexion_db.php";
     
                         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                             $tarifs[] = [
-                                'debut' => $row['debut'] ?? null,
-                                'num' => isset($row['num']) ? ($labels[$row['num']] ?? $row['num']) : 'Non défini',
-                                'code' => $row['code'] ?? 'Non défini',
+                                'periode' => $row['id_periode'] ?? null,
+                                'type' => isset($row['id_type']) ? ($labels[$row['id_type']] ?? 'Non défini') : 'Non défini',
+                                'liaison' => $row['id_liaison'] ?? 'Non défini',
                                 'tarif' => $row['tarif'] ?? 0.00
                             ];
                         }
@@ -311,6 +389,64 @@ include_once "connexion_db.php";
         }
     
         return [];
+    }*/
+
+    function getTarifsByPeriode($date){
+    try {
+        $pdo = connexionDatabase();
+
+        $stmtPeriode = $pdo->prepare("
+            SELECT id
+            FROM periode
+            WHERE :date BETWEEN dateDebut AND dateFin
+        ");
+        $stmtPeriode->bindParam(':date', $date);
+        $stmtPeriode->execute();
+
+        $periode = $stmtPeriode->fetch(PDO::FETCH_ASSOC);
+        if (!$periode) {
+            throw new Exception("Aucune période trouvée pour cette date.");
+        }
+
+        $idPeriode = $periode['id'];
+
+        // Récupérer tous les tarifs pour cette période, avec le nom de catégorie
+        $stmtTarifs = $pdo->prepare("
+            SELECT 
+                tarif.id_liaison,
+                tarif.tarif,
+                categorie.lettre AS categorie_lettre
+            FROM tarif
+            JOIN categorie ON tarif.id_categorie = categorie.id
+            WHERE tarif.id_periode = :id_periode
+        ");
+        $stmtTarifs->bindParam(':id_periode', $idPeriode, PDO::PARAM_INT);
+        $stmtTarifs->execute();
+
+        $tarifs = $stmtTarifs->fetchAll(PDO::FETCH_ASSOC);
+
+        return $tarifs;
+
+    } catch (PDOException $e) {
+        die("Erreur de base de données : " . $e->getMessage());
+    } catch (Exception $e) {
+        die("Erreur : " . $e->getMessage());
+    }
+}
+
+
+    function ajouterOccupant() {
+        try {
+            $pdo = connexionDatabase();
+
+            $query = $pdo->prepare("UPDATE Bateau SET $categorie = ? WHERE lettre = ?");
+            $query->bindParam(':lettre_bateau', $lettre_bateau, PDO::PARAM_STR);
+            $query->execute();
+
+        } catch (PDOException $e) {
+            die("Une erreur s'est produite : " . $e->getMessage());
+        }
+
     }
 
     function ajouterOccupantsBateau($bateau_id, $zone, $occupants) {
@@ -399,7 +535,7 @@ function afficherPlacesBateau($bateau_id) {
         try {
             $pdo = connexionDatabase();
         
-            $query = $pdo->prepare("SELECT id FROM periode WHERE :dateDepart BETWEEN debut AND fin LIMIT 1");
+            $query = $pdo->prepare("SELECT id FROM periode WHERE :dateDepart BETWEEN dateDebut AND dateFin LIMIT 1");
             $query->bindParam(':dateDepart', $dateDepart, PDO::PARAM_STR);
             $query->execute();
         
@@ -441,9 +577,9 @@ function afficherPlacesBateau($bateau_id) {
         try {
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
-            SELECT DISTINCT debut 
-            FROM tarifer
-            ORDER BY debut ASC;
+            SELECT * 
+            FROM periode
+            ORDER BY dateDebut ASC;
             ");
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -458,8 +594,7 @@ function afficherPlacesBateau($bateau_id) {
             $pdo = connexionDatabase();
             $query = $pdo->prepare("
             SELECT * 
-            FROM liaison
-            ORDER BY code ASC;
+            FROM vue_liaisons
             ");
             $query->execute();
             return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -468,3 +603,9 @@ function afficherPlacesBateau($bateau_id) {
             die("Une erreur s'est produite : " . $e->getMessage());
         }
     }
+
+    function formatDate($date) {
+        $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+        return $dateTime ? $dateTime->format('d/m/Y') : null;
+    }
+    

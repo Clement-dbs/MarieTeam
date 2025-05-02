@@ -1,92 +1,66 @@
-<div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl mx-auto">
-  <!-- Informations générales -->
-  <h2 class="text-lg font-bold text-gray-800">Places restantes</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-5">
-    <div class="border rounded-lg p-4 text-center shadow hover:shadow-md transition">
-      <h3 class="text-lg font-bold text-gray-800">Catégorie A </h3>
-      <p class="text-sm text-gray-600 mt-1">Adulte, Junior, Enfants</p>
-      <p class="font-semibold"><?= htmlspecialchars($places['placesA'])?></p>
+<form method="POST" action="./?action=reservation" onsubmit="return confirm('Confirmer la réservation ?')">
+<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Colonne Gauche - Options -->
+    <div>
+    <?php 
+  
+    foreach($typeVoyageurs as $typeVoyageur){ 
+      $categorie = $typeVoyageur['categorie'];
+      $max = $placesRestantesParCategorie[$categorie] ?? 0;
+      ?>
+      <div class="bg-white p-4 rounded-lg shadow mb-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <img src="https://cdn-icons-png.flaticon.com/512/595/595884.png" alt="Bagage" class="w-10 h-10" />
+      <div>
+        <h2 class="font-medium">
+          <?= $typeVoyageur['libelle']?>
+        </h2>
+      </div>
     </div>
-    <div class="border rounded-lg p-4 text-center shadow hover:shadow-md transition">
-      <h3 class="text-lg font-bold text-gray-800">Catégorie B</h3>
-      <p class="text-sm text-gray-600 mt-1">Voitures</p>
-      <p class="font-semibold"><?= htmlspecialchars($places['placesB']) ?></p>
-    </div>
-    <div class="border rounded-lg p-4 text-center shadow hover:shadow-md transition">
-      <h3 class="text-lg font-bold text-gray-800">Catégorie C </h3>
-      <p class="text-sm text-gray-600 mt-1">Fourgon, Camping Car, Camion</p>
-      <p class="font-semibold"><?= htmlspecialchars($places['placesC']) ?></p>
+    <div class="flex items-center space-x-2">
+    <input 
+              type="number" 
+              name="quantites[<?= $tarif['type'] ?>][<?= $tarif['id_type_passager'] ?? $tarif['id_type_vehicule'] ?>]" 
+              value="0" 
+              min="0" 
+              max="<?= $max?>" 
+              class="w-full border px-2 py-1 rounded" 
+            />
     </div>
   </div>
+<?php } ?>
 
-  <!-- Formulaire de réservation -->
-  <form method="POST" action="./?action=reservation" onsubmit="return confirmReservation()" class="space-y-6">
-    <!-- Sélection de la traversée -->
-    <?php if (!empty($traversees)): ?>
-      <div>
-        <label for="traversee" class="block text-lg font-medium text-gray-700">Sélectionnez une traversée :</label>
-        <select name="traversee" id="traversee" required class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-          <option value="">-- Choisissez une traversée --</option>
-          <?php foreach ($traversees as $traversee): ?>
-            <option value="<?= htmlspecialchars($traversee['id']) ?>">
-              <?= htmlspecialchars($traversee['id']) ?> - <?= htmlspecialchars($traversee['heure']) ?> (<?= htmlspecialchars($traversee['jour']) ?>)
-            </option>
-          <?php endforeach; ?>
-        </select>
-      </div>
-    <?php endif; ?>
-
-    <!-- Tableau des tarifs -->
-    <?php if (!empty($tarifs)): ?>
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse border border-gray-200">
-          <thead class="bg-gray-200">
-            <tr>
-              <th class="border border-gray-300 px-4 py-2">Type</th>
-              <th class="border border-gray-300 px-4 py-2">Tarif (€)</th>
-              <th class="border border-gray-300 px-4 py-2">Quantité</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($tarifs as $index => $tarif): ?>
-              <tr class="odd:bg-white even:bg-gray-50">
-                <td class="border border-gray-300 px-4 py-2"><?= htmlspecialchars($tarif['num']) ?></td>
-                <td class="border border-gray-300 px-4 py-2"><?= htmlspecialchars($tarif['tarif']) ?>€</td>
-                <td class="border border-gray-300 px-4 py-2">
-                  <?php 
-                  // Empeche l'insertion au dessus des places max
-                    $maxPlaces = 0;
-                    switch ($tarif['num']) {
-                        case 'Adulte': case 'Junior 8-18 ans': case 'Enfant 0-7 ans':
-                            $maxPlaces = $places['placesA'];
-                            break;
-                        case 'Voiture longueur < 4m': case 'Voiture longueur < 5m': case 'Fourgon':
-                            $maxPlaces = $places['placesB'];
-                            break;
-                        case 'Camping Car': case 'Camion':
-                            $maxPlaces = $places['placesC'];
-                            break;
-                    }
-                  ?>
-                  <input type="number" name="quantite[]" value="0" min="0" max="<?= $maxPlaces ?>" required class="w-full px-3 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                  <input type="hidden" name="tarif[]" value="<?= htmlspecialchars($tarif['tarif']) ?>">
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
-    <?php endif; ?>
-
-    <!-- Bouton de soumission -->
-    <div class="text-right">
-      <input type="submit" name="btn_submit" value="Enregistrer la réservation" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none cursor-pointer">
+      <!-- Bouton -->
+      <button class="mt-6 w-full bg-blue-500 text-white py-3 rounded-full font-semibold text-lg">Valider mon panier</button>
     </div>
-  </form>
-</div>
 
-<script>
-  function confirmReservation() {
-    return confirm("Êtes-vous sûr de vouloir réserver avec les quantités sélectionnées ?");
-  }
-</script>
+    <!-- Colonne Droite - Récapitulatif -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <p class="text-sm text-gray-700 mb-1">Tourcoing ➜ Paris Aéroport Roissy-CDG 2</p>
+
+      <div class="bg-gray-100 p-4 rounded-lg mb-4">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-semibold">Samedi 3 Mai 2025</span>
+          <a href="#" class="text-blue-600 text-sm underline">Détail du billet</a>
+        </div>
+        <div class="flex justify-between items-center text-sm text-gray-700">
+          <div>
+            <p class="font-medium">06:57</p>
+            <p>Tourcoing</p>
+          </div>
+          <p class="text-center">1h02</p>
+          <div class="text-right">
+            <p class="font-medium">07:59</p>
+            <p>Paris Aéroport Roissy-CDG 2</p>
+          </div>
+        </div>
+        <p class="mt-2 text-pink-600 text-xs">Grande Vitesse | Train n°7867</p>
+      </div>
+
+      <div class="flex justify-between border-t pt-4">
+        <span class="text-sm font-medium">Total</span>
+        <span class="text-pink-600 font-semibold text-lg">19€</span>
+      </div>
+    </div>
+  </div>
+</form>

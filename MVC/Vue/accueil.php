@@ -12,10 +12,10 @@
                 class="py-4 px-6 border rounded-lg text-gray-700 font-NeueMontrealRegular w-64 h-15">
                 <option value="" disabled selected hidden>Sélectionner un secteur</option>
                 <?php
-                foreach ($secteurs as $secteur) {
-                    $selected = (isset($_SESSION['secteur']) && $_SESSION['secteur'] === $secteur) ? 'selected' : '';
-                    echo '<option value="' . $secteur . '" ' . $selected . '>' . $secteur . '</option>';
-                }
+                    foreach ($secteurs as $secteur) {
+                        $selected = (isset($_SESSION['secteur']) && $_SESSION['secteur'] == $secteur['id']) ? 'selected' : '';
+                        echo '<option value="' . $secteur['id'] . '" ' . $selected . '>' . $secteur['nom'] . '</option>';
+                    }
                 ?>
             </select>
         </div>
@@ -26,16 +26,17 @@
                 <img src="../Assets/Icons/location.png" alt="" class="w-5 h-5 mr-2">
                 Liaison
             </label>
-            <select name="liaison" 
+            <select name="liaison" onchange="this.form.submit()"
                 class="py-4 px-6 border rounded-lg text-gray-700 font-NeueMontrealRegular w-64 h-15">
                 <option value="" disabled selected hidden>Sélectionner une liaison</option>
-                <?php
+             <?php
                 foreach ($liaisons as $liaison) {
-                    $selected = (isset($_SESSION['secteur']) && $_SESSION['liaison'] == $liaison['CodeLiaison']) ? 'selected' : '';
-                    echo '<option value="' . $liaison['CodeLiaison'] . '" ' . $selected . '>' . $liaison['PortDepart'] . ' - ' . $liaison['PortArrivee'] . '</option>';
+                    $selected = (isset($_SESSION['liaison']) && $_SESSION['liaison'] == $liaison['id_liaison']) ? 'selected' : '';
+                    echo '<option value="' . $liaison['id_liaison'] . '" ' . $selected . '>' . $liaison['PortDepart'] . ' - ' . $liaison['PortArrivee'] . '</option>';
                 }
-                ?>
-            </select>
+            ?>
+</select>
+
         </div>
 
         <!-- Choix Date -->
@@ -56,7 +57,6 @@
         class="bg-blue-600 text-white hover:bg-blue-700 w-40 text-center py-2 transform transition duration-300 hover:scale-110 cursor-pointer">
 </div>
 
-
     </div>
 </form>
 
@@ -72,32 +72,32 @@
     <div class="flex justify-center">
             <div class='flex flex-col w-1/3 mr-10 text-center'>
                 <form action='' method='post' class='space-y-6'>
-                    <div>
+                    <div name='traversee'>
                         <?php 
                         if (!empty($traversees)) {
                             $premiereTraversee = $traversees[0]; 
                         }
                         foreach ($traversees as $traversee) {
-                            $heureDepart = new DateTime($traversee['HeureDepart']);
-                            $heureArrivee = new DateTime($traversee['HeureArrivee']);
+                            $heureDepart = new DateTime($traversee['depart']);
+                            $heureArrivee = new DateTime($traversee['arrive']);
                             $difference = $heureArrivee->diff($heureDepart);
                         ?>
                             <div class='flex flex-col bg-white mb-10 rounded-lg shadow-md hover:bg-blue-50 focus:ring focus:ring-blue-300 focus:border-blue-500 border-2'>
                                 <button type='submit' name='traversee' 
-                                        value="<?php echo htmlspecialchars($traversee['Id'], ENT_QUOTES, 'UTF-8'); ?>" 
+                                        value="<?php echo htmlspecialchars($traversee['id'], ENT_QUOTES, 'UTF-8'); ?>" 
                                         class='w-full p-6'>
                                     <div class='flex justify-between'>
                                         <div class='flex flex-col'>
                                             <div class='text-lg font-NeueMontrealRegular'>
-                                                <?php echo date('H:i', strtotime($traversee['HeureDepart'])) . " " . $traversee['Depart']; ?>
+                                                <?php echo date('H:i', strtotime($traversee['depart']));?>
                                             </div>
                                             <div class='text-lg font-NeueMontrealRegular'>
-                                                <?php echo date('H:i', strtotime($traversee['HeureArrivee'])) . " " . $traversee['Arrivee']; ?>
+                                                <?php echo date('H:i', strtotime($traversee['arrive'])); ?>
                                             </div>
                                         </div>
                                         <div class='flex items-center'>
                                             <span class='text-xl font-NeueMontrealBold'>
-                                                <?php 
+                                                <?php /*
                                                 $periode = $_SESSION['dateDepart'] ?? null;
                                                 $tarifs = getTarifsByPeriode($periode);
 
@@ -106,13 +106,13 @@
                                                     if ($tarif['num'] === 'Adulte') {
                                                         $tarifAdulte = $tarif['tarif'];
                                                         break;
-                                                    }                                                    
+                                                    }
                                                 }
 
                                                 $affichageTarif = (floor($tarifAdulte) == $tarifAdulte) 
                                                     ? number_format($tarifAdulte, 0, '.', '') 
                                                     : number_format($tarifAdulte, 2, '.', '');
-                                                echo "Dès $affichageTarif €";
+                                                echo "$affichageTarif €";*/
                                                 ?>
                                             </span>
                                         </div>
@@ -129,10 +129,9 @@
             </div>
 
             <!-- Affichage des détails de la traversée -->
-            
-            <?php if(!isset($_POST['traversee'])){
-               //  var_dump($traversee[0]['Depart']);
-                ?>
+            <?php if (isset($_SESSION['traversee'])) { 
+                $traversee = getTraverseesById($_SESSION['traversee']);
+            ?>
                 <div class="flex flex-col w-1/4 px-10 py-10 ml-10 max-h-min bg-white rounded-lg font-NeueMontrealBold text-black shadow-md border-2">
                     <form action="./?action=reservation" method="post">
                         <div class="flex justify-center pb-3 text-2xl">
@@ -141,70 +140,27 @@
 
                         <div class="flex justify-between py-2">
                             <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Départ : <?php echo htmlspecialchars((string)$premiereTraversee['Depart'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($premiereTraversee['HeureDepart'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
+                                <h3>Départ : <?php echo htmlspecialchars((string)$traversee[0]['depart'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                
                             </div>
                             <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Arrivée : <?php echo htmlspecialchars((string)$premiereTraversee['Arrivee'], ENT_QUOTES, 'UTF-8');?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($premiereTraversee['HeureArrivee'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
+                                <h3>Arrivée : <?php echo htmlspecialchars((string)$traversee[0]['arrive'], ENT_QUOTES, 'UTF-8');?></h3>
                             </div>
                         </div>
 
                         <div class="py-2 px-5 border rounded-lg my-5">
                             <h3>Places disponibles</h3>
-                            <span>Passagers : <?php echo (int)$premiereTraversee['A Passager']; ?></span><br>
-                            <span>Véhicule < 2m : <?php echo (int)$premiereTraversee['B Véh.inf.2m']; ?></span><br>
-                            <span>Véhicule > 2m : <?php echo (int)$premiereTraversee['C Véh.sup.2m']; ?></span>
+                            <span>Passagers : <?php echo (int)$traversee[0]['Place Passager']; ?></span><br>
+                            <span>Véhicule < 2m : <?php echo (int)$traversee[0]['Place Véhicule Léger']; ?></span><br>
+                            <span>Véhicule > 2m : <?php echo (int)$traversee[0]['Place Véhicule Lourd']; ?></span>
                         </div>
 
-                        <input type="text" hidden name="bateauID" value="<?= htmlspecialchars($premiereTraversee['bateauID'])?>">
-                        <button type="submit" name="traverseeSelectionnee" value="<?php echo htmlspecialchars($premiereTraversee['Id'], ENT_QUOTES, 'UTF-8'); ?>" 
+                        <input type="text" hidden name="bateauID" value="<?= htmlspecialchars($traversee[0]['id_bateau'])?>">
+                        <button type="submit" name="traverseeSelectionnee" value="<?php echo htmlspecialchars($traversee[0]['id_bateau'], ENT_QUOTES, 'UTF-8'); ?>" 
                                 class="w-full p-6 bg-blue-600 text-white rounded-lg hover:bg-opacity-80">Acheter mon billet</button>
                     </form>
                 </div>
-                 
-        <?php } else { 
-            $traversee = getTraverseesById($_SESSION['traversee']);
-            ?>
-             <div class="flex flex-col w-1/4 px-10 py-10 ml-10 max-h-min bg-white rounded-lg font-NeueMontrealBold text-black shadow-md border-2">
-                    <form action="./?action=reservation" method="post">
-                        <div class="flex justify-center pb-3 text-2xl">
-                            <h2>Détails de la traversée</h2>
-                        </div>
-
-                        <div class="flex justify-between py-2">
-                            <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Départ : <?php echo htmlspecialchars((string)$traversee[0]['Depart'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureDepart'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
-                            </div>
-                            <div class="border rounded-lg p-5 m-2 w-1/2">
-                                <h3>Arrivée : <?php echo htmlspecialchars((string)$traversee[0]['Arrivee'], ENT_QUOTES, 'UTF-8');?></h3>
-                                <span class="opacity-50">
-                                    <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureArrivee'])), ENT_QUOTES, 'UTF-8'); ?>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="py-2 px-5 border rounded-lg my-5">
-                            <h3>Places disponibles</h3>
-                            <span>Passagers : <?php echo (int)$traversee[0]['A Passager']; ?></span><br>
-                            <span>Véhicule < 2m : <?php echo (int)$traversee[0]['B Véh.inf.2m']; ?></span><br>
-                            <span>Véhicule > 2m : <?php echo (int)$traversee[0]['C Véh.sup.2m']; ?></span>
-                        </div>
-
-                        <input type="text" hidden name="bateauID" value="<?= htmlspecialchars($traversee[0]['bateauID'])?>">
-                        <button type="submit" name="traverseeSelectionnee" value="<?php echo htmlspecialchars($traversee[0]['Id'], ENT_QUOTES, 'UTF-8'); ?>" 
-                                class="w-full p-6 bg-blue-600 text-white rounded-lg hover:bg-opacity-80">Acheter mon billet</button>
-                    </form>
-                </div>
-       <?php }?>
-        
+            <?php } ?>
         <?php } else { ?>
             <div class="text-center font-NeueMontrealRegular">
                 <p>Aucune traversée disponible</p>
