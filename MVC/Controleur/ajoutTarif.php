@@ -19,7 +19,7 @@ function afficherTypesperiodesLiaisons() {
         $periodes = $periodesQuery->fetchAll(PDO::FETCH_ASSOC);
 
         // Récupérer toutes les liaisons
-        $liaisonsQuery = $pdo->prepare("SELECT * FROM liaison");
+        $liaisonsQuery = $pdo->prepare("SELECT * FROM vue_liaisons");
         $liaisonsQuery->execute();
         $liaisons = $liaisonsQuery->fetchAll(PDO::FETCH_ASSOC);
 
@@ -39,49 +39,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo = connexionDatabase();
 
-        // Récupérer la periode globale choisie
+        // Récupérer la période globale choisie
         $periodeGlobalId = $_POST['periodeGlobal'];
         if (!$periodeGlobalId) {
-            throw new Exception("Veuillez sélectionner une periode globale.");
+            throw new Exception("Veuillez sélectionner une période globale.");
         }
 
-        // Récupérer la date de début de la periode globale
-        $periodeQuery = $pdo->prepare("SELECT debut FROM periode WHERE id = :periodeId");
+        // Récupérer la date de début de la période globale
+        $periodeQuery = $pdo->prepare("SELECT dateDebut FROM periode WHERE id = :periodeId");
         $periodeQuery->execute([':periodeId' => $periodeGlobalId]);
         $periode = $periodeQuery->fetch(PDO::FETCH_ASSOC);
-        $debutGlobal = $periode ? $periode['debut'] : null;
+        $debutGlobal = $periode ? $periode['dateDebut'] : null;
 
         // Récupérer la liaison globale choisie
-        $liaisonGlobalCode = $_POST['liaisonGlobal'];
-        if (!$liaisonGlobalCode) {
+        $liaisonGlobalId = $_POST['liaisonGlobal'];
+        if (!$liaisonGlobalId) {
             throw new Exception("Veuillez sélectionner une liaison globale.");
         }
 
         // Vérifier si la liaison globale existe
-        $liaisonQuery = $pdo->prepare("SELECT * FROM liaison WHERE code = :code");
-        $liaisonQuery->execute([':code' => $liaisonGlobalCode]);
+        $liaisonQuery = $pdo->prepare("SELECT * FROM liaison WHERE id = :id");
+        $liaisonQuery->execute([':id' => $liaisonGlobalId]);
         $liaison = $liaisonQuery->fetch(PDO::FETCH_ASSOC);
 
         if (!$debutGlobal || !$liaison) {
-            throw new Exception("periode ou liaison non valide.");
+            throw new Exception("Période ou liaison non valide.");
         }
 
         // Parcours des types et insertion des tarifs
         foreach ($_POST['tarif'] as $typeId => $tarif) {
-            // Insertion du tarif avec la periode et la liaison globale
+            // Insertion du tarif avec la période et la liaison globale
             $query = $pdo->prepare("
-                INSERT INTO tarifer (debut, num, code, tarif)
-                VALUES (:debut, :num, :code, :tarif)
+                INSERT INTO tarif (id_liaison, id_periode, id_type, tarif)
+                VALUES (:id_liaison, :id_periode, :id_type, :tarif)
             ");
             $query->execute([
-                ':debut' => $debutGlobal,
-                ':num' => $typeId,
-                ':code' => $liaisonGlobalCode,
+                ':id_liaison' => $liaisonGlobalId,
+                ':id_periode' => $periodeGlobalId,
+                ':id_type' => $typeId,
                 ':tarif' => $tarif,
             ]);
         }
         header("Location: ./?action=panelTarifs");
-        
+
     } catch (PDOException $e) {
         die("Une erreur s'est produite lors de l'ajout des tarifs : " . $e->getMessage());
     } catch (Exception $e) {
@@ -91,3 +91,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Inclure la vue
 include "$racine/vue/ajoutTarif.php";
+?>

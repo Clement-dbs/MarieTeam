@@ -7,16 +7,18 @@ if (isset($_POST['submit'])) {
 
     $dateDebut  = $_POST['dateDebut'] ?? null;
     $dateFin  = $_POST['dateFin'] ?? null;
+    $nom  = $_POST['nom'] ?? null;
 
     try { 
         $pdo = connexionDatabase();
-        $query = $pdo->prepare("INSERT INTO periode (debut, fin) VALUES (:dateDebut, :dateFin)");
+        $query = $pdo->prepare("INSERT INTO periode (nom, dateDebut, dateFin) VALUES (:nom, :dateDebut, :dateFin)");
+        $query->bindParam(':nom', $nom, PDO::PARAM_STR);
         $query->bindParam(':dateDebut', $dateDebut, PDO::PARAM_STR);
         $query->bindParam(':dateFin', $dateFin, PDO::PARAM_STR);
         $query->execute();        
         $result = $query->fetch(PDO::FETCH_ASSOC);
         
-        echo "Nouvelle periode enregistré, du ".$dateDebut." au ".$dateFin;
+        echo "Nouvelle periode enregistré, ".$nom." du ".$dateDebut." au ".$dateFin;
 
         include "$racine/vue/ajoutPeriode.php";
 
