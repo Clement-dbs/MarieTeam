@@ -8,11 +8,12 @@ if(isset($_POST['secteur'])){
 
 if(isset($_POST['liaison'])){
     $_SESSION['liaison'] = $_POST['liaison'];
-    $id_liaison = $_SESSION['liaison'];
 }
 
-if(isset($_POST['bateauID'])){
-    $_SESSION['bateauID'] = $_POST['bateauID'];
+if(isset($_POST['periode'])){
+    echo('test');
+    $_SESSION['periode'] = $_POST['periode'];
+    var_dump($_SESSION['periode']);
 }
 
 if (isset($_POST['dateDepart'])) {
@@ -21,8 +22,13 @@ if (isset($_POST['dateDepart'])) {
 
 if(isset($_POST['traversee'])){
     $_SESSION['traversee'] = $_POST['traversee'];
-    $id_liaison = $_SESSION['liaison'];
 }
+
+if(isset($_POST['bateauID'])){
+    $_SESSION['bateauID'] = $_POST['bateauID'];
+}
+
+
 
 if (isset($_SESSION['dateDepart'])) {
     $idPeriode = getIdPeriodeByDateDepart($_SESSION['dateDepart']);

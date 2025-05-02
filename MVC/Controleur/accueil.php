@@ -4,7 +4,7 @@
 $secteurs = getSecteurs();
 
 // Récupère les liaisons en fonction du secteur
-if(isset($_POST['secteur']) || isset($_SESSION['secteur'])){
+if(isset($_SESSION['secteur'])){
     $liaisons = getLiaisons($_SESSION['secteur']);
 }
 
@@ -12,7 +12,6 @@ if(isset($_POST['secteur']) || isset($_SESSION['secteur'])){
 if (isset($_POST['rechercher']) && !empty($_POST['liaison']) && !empty($_POST['dateDepart'])) {
     $traversees = getTraversees($_SESSION['liaison'], $_SESSION['dateDepart']);
 }
-
 
 // Récupère les données de la traversee en utilisant son id
 if(isset($_POST['traversee'])){

@@ -97,3 +97,114 @@
     <?php
         //include 'Vue/footer.php';
     ?>   
+
+
+
+    Save reservation : 
+
+    <div>
+        <label for="traversee" class="block text-lg font-medium text-gray-700">Sélectionnez une traversée :</label>
+        <select name="traversee" id="traversee" required class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <option value="">-- Choisissez une traversée --</option>
+          <?php foreach ($traversees as $traversee): ?>
+            <option value="<?= htmlspecialchars($traversee['id']) ?>">
+              <?= htmlspecialchars($traversee['id']) ?> - <?= htmlspecialchars($traversee['heure']) ?> (<?= htmlspecialchars($traversee['jour']) ?>)
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+
+      save reservation
+
+      <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl mx-auto">
+  <!-- Informations générales -->
+  <h2 class="text-lg font-bold text-gray-800">Places restantes</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-5">
+    <div class="border rounded-lg p-4 text-center shadow hover:shadow-md transition">
+      <h3 class="text-lg font-bold text-gray-800">Catégorie A </h3>
+      <p class="text-sm text-gray-600 mt-1">Adulte, Junior, Enfants</p>
+      <p class="font-semibold"><?= htmlspecialchars($traversee[0]['Place Passager'])?></p>
+    </div>
+    <div class="border rounded-lg p-4 text-center shadow hover:shadow-md transition">
+      <h3 class="text-lg font-bold text-gray-800">Catégorie B</h3>
+      <p class="text-sm text-gray-600 mt-1">Voitures</p>
+      <p class="font-semibold"><?= htmlspecialchars($traversee[0]['Place Véhicule Léger']) ?></p>
+    </div>
+    <div class="border rounded-lg p-4 text-center shadow hover:shadow-md transition">
+      <h3 class="text-lg font-bold text-gray-800">Catégorie C </h3>
+      <p class="text-sm text-gray-600 mt-1">Fourgon, Camping Car, Camion</p>
+      <p class="font-semibold"><?= htmlspecialchars($traversee[0]['Place Véhicule Lourd']) ?></p>
+    </div>
+  </div>
+
+  <!-- Formulaire de réservation -->
+  <!-- Formulaire -->
+<form method="POST" action="./?action=reservation" onsubmit="return confirm('Confirmer la réservation ?')">
+  <table class="w-full border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="border px-4 py-2">Catégorie</th>
+        <th class="border px-4 py-2">Type</th>
+        <th class="border px-4 py-2">Tarif (€)</th>
+        <th class="border px-4 py-2">Quantité</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($tarifs as $tarif): ?>
+        <?php
+          // Définir la limite max selon le type
+          $max = 0;
+          if ($tarif['type'] === 'passager') {
+              $stmt = $db->prepare("SELECT place_passager_max FROM traversee 
+                JOIN liaison ON traversee.id_liaison = liaison.id 
+                JOIN bateau ON liaison.id_bateau = bateau.id 
+                WHERE traversee.id = ?");
+              $stmt->execute([$idTraversee]);
+              $max = $stmt->fetchColumn();
+          } elseif ($tarif['type'] === 'vehicule') {
+              // Si type_vehicule appartient à catégorie B → véhicule léger, sinon lourd
+              if ($tarif['categorie'] === 'B') {
+                  $stmt = $db->prepare("SELECT place_vehicule_leger_max FROM traversee 
+                    JOIN liaison ON traversee.id_liaison = liaison.id 
+                    JOIN bateau ON liaison.id_bateau = bateau.id 
+                    WHERE traversee.id = ?");
+              } else {
+                  $stmt = $db->prepare("SELECT place_vehicule_lourd_max FROM traversee 
+                    JOIN liaison ON traversee.id_liaison = liaison.id 
+                    JOIN bateau ON liaison.id_bateau = bateau.id 
+                    WHERE traversee.id = ?");
+              }
+              $stmt->execute([$idTraversee]);
+              $max = $stmt->fetchColumn();
+          }
+        ?>
+        <tr class="odd:bg-white even:bg-gray-50">
+          <td class="border px-4 py-2"><?= htmlspecialchars($tarif['categorie']) ?></td>
+          <td class="border px-4 py-2"><?= htmlspecialchars($tarif['libelle_type']) ?></td>
+          <td class="border px-4 py-2"><?= number_format($tarif['tarif'], 2) ?> €</td>
+          <td class="border px-4 py-2">
+            <input 
+              type="number" 
+              name="quantites[<?= $tarif['type'] ?>][<?= $tarif['id_type_passager'] ?? $tarif['id_type_vehicule'] ?>]" 
+              value="0" 
+              min="0" 
+              max="<?= $max ?>" 
+              class="w-full border px-2 py-1 rounded" 
+            />
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+  <div class="text-right mt-4">
+    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">Réserver</button>
+  </div>
+</form>
+
+
+<script>
+  function confirmReservation() {
+    return confirm("Êtes-vous sûr de vouloir réserver avec les quantités sélectionnées ?");
+  }
+</script>

@@ -23,3 +23,5 @@ echo "<br>Nom : ".$nom;
   }
 
   echo "<br>Prix total : ".$prixTotal." €";
+
+  include "$racine/vue/recapReservation.php";
