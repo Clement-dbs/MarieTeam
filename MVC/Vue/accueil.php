@@ -13,8 +13,8 @@
                 <option value="" disabled selected hidden>Sélectionner un secteur</option>
                 <?php
                 foreach ($secteurs as $secteur) {
-                    $selected = (isset($_SESSION['secteur']) && $_SESSION['secteur'] === $secteur) ? 'selected' : '';
-                    echo '<option value="' . $secteur . '" ' . $selected . '>' . $secteur . '</option>';
+                    $selected = (isset($_SESSION['secteur']) && $_SESSION['secteur'] === $nom) ? 'selected' : '';
+                    echo '<option value="' . $secteur['id'] . '" ' . $selected . '>' . htmlspecialchars($secteur['nom']) . '</option>';
                 }
                 ?>
             </select>
@@ -31,8 +31,8 @@
                 <option value="" disabled selected hidden>Sélectionner une liaison</option>
                 <?php
                 foreach ($liaisons as $liaison) {
-                    $selected = (isset($_SESSION['secteur']) && $_SESSION['liaison'] == $liaison['CodeLiaison']) ? 'selected' : '';
-                    echo '<option value="' . $liaison['CodeLiaison'] . '" ' . $selected . '>' . $liaison['PortDepart'] . ' - ' . $liaison['PortArrivee'] . '</option>';
+                    $selected = (isset($_SESSION['secteur']) && $_SESSION['liaison'] == $liaison['id_liaison']) ? 'selected' : '';
+                    echo '<option value="' . $liaison['id_liaison'] . '" ' . $selected . '>' . $liaison['PortDepart'] . ' - ' . $liaison['PortArrivee'] . '</option>';
                 }
                 ?>
             </select>
@@ -78,9 +78,9 @@
                             $premiereTraversee = $traversees[0]; 
                         }
                         foreach ($traversees as $traversee) {
-                            $heureDepart = new DateTime($traversee['HeureDepart']);
-                            $heureArrivee = new DateTime($traversee['HeureArrivee']);
-                            $difference = $heureArrivee->diff($heureDepart);
+                            $depart = new DateTime($traversee['depart']);
+                            $arrive = new DateTime($traversee['arrive']);
+                            $difference = $arrive->diff($depart);
                         ?>
                             <div class='flex flex-col bg-white mb-10 rounded-lg shadow-md hover:bg-blue-50 focus:ring focus:ring-blue-300 focus:border-blue-500 border-2'>
                                 <button type='submit' name='traversee' 
@@ -89,10 +89,10 @@
                                     <div class='flex justify-between'>
                                         <div class='flex flex-col'>
                                             <div class='text-lg font-NeueMontrealRegular'>
-                                                <?php echo date('H:i', strtotime($traversee['HeureDepart'])) . " " . $traversee['Depart']; ?>
+                                                <?php echo date('H:i', strtotime($traversee['depart'])) . " " . $traversee['Depart']; ?>
                                             </div>
                                             <div class='text-lg font-NeueMontrealRegular'>
-                                                <?php echo date('H:i', strtotime($traversee['HeureArrivee'])) . " " . $traversee['Arrivee']; ?>
+                                                <?php echo date('H:i', strtotime($traversee['arrive'])) . " " . $traversee['Arrivee']; ?>
                                             </div>
                                         </div>
                                         <div class='flex items-center'>
@@ -103,10 +103,10 @@
 
                                                 $tarifAdulte = null;
                                                 foreach ($tarifs as $tarif) {
-                                                    if ($tarif['num'] === 'Adulte') {
+                                                    if ($tarif['type'] === 'Adulte') {
                                                         $tarifAdulte = $tarif['tarif'];
                                                         break;
-                                                    }                                                    
+                                                    }                                                
                                                 }
 
                                                 $affichageTarif = (floor($tarifAdulte) == $tarifAdulte) 
@@ -143,13 +143,13 @@ if (isset($_SESSION['traversee'])) {
                 <div class="border rounded-lg p-5 m-2 w-1/2">
                     <h3>Départ : <?php echo htmlspecialchars((string)$traversee[0]['Depart'], ENT_QUOTES, 'UTF-8'); ?></h3>
                     <span class="opacity-50">
-                        <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureDepart'])), ENT_QUOTES, 'UTF-8'); ?>
+                        <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['depart'])), ENT_QUOTES, 'UTF-8'); ?>
                     </span>
                 </div>
                 <div class="border rounded-lg p-5 m-2 w-1/2">
                     <h3>Arrivée : <?php echo htmlspecialchars((string)$traversee[0]['Arrivee'], ENT_QUOTES, 'UTF-8');?></h3>
                     <span class="opacity-50">
-                        <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['HeureArrivee'])), ENT_QUOTES, 'UTF-8'); ?>
+                        <?php echo htmlspecialchars(date('H:i', strtotime($traversee[0]['arrive'])), ENT_QUOTES, 'UTF-8'); ?>
                     </span>
                 </div>
             </div>

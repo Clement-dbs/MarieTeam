@@ -36,7 +36,7 @@
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camping_car']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camion']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars(number_format($reservation['prix_total'], 2, ',', ' ') . ' €'); ?>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['id_1']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['id_traversee']); ?></td>
                             </td>
                         </tr>
                     <?php endforeach; ?>

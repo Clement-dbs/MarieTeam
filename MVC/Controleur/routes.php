@@ -17,9 +17,12 @@ function routes($chemin) {
     $lesChemins["panelPeriode"] = "panelPeriode.php";
     $lesChemins["panelBateau"] = "panelBateau.php";
     $lesChemins["ajoutBateau"] = "ajoutBateau.php";
+    $lesChemins["panelLiaison"] = "panelLiaison.php";
+    $lesChemins["ajoutLiaison"] = "ajoutLiaison.php";
     $lesChemins["panelTarifs"] = "panelTarifs.php";
     $lesChemins["ajoutTarif"] = "ajoutTarif.php";
     $lesChemins["editProfil"] = "editProfil.php";
+    $lesChemins["profilReservation"] = "profilReservation.php";
     if (array_key_exists($chemin, $lesChemins)) {
         return $lesChemins[$chemin];
     } 

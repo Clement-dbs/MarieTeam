@@ -48,15 +48,16 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($tarifs as $index => $tarif): ?>
+            <?php foreach ($tarifs as $index => $tarif):?>
+              
               <tr class="odd:bg-white even:bg-gray-50">
-                <td class="border border-gray-300 px-4 py-2"><?= htmlspecialchars($tarif['num']) ?></td>
+                <td class="border border-gray-300 px-4 py-2"><?= htmlspecialchars($tarif['type']) ?></td>
                 <td class="border border-gray-300 px-4 py-2"><?= htmlspecialchars($tarif['tarif']) ?>€</td>
                 <td class="border border-gray-300 px-4 py-2">
                   <?php 
                   // Empeche l'insertion au dessus des places max
                     $maxPlaces = 0;
-                    switch ($tarif['num']) {
+                    switch ($tarif['type']) {
                         case 'Adulte': case 'Junior 8-18 ans': case 'Enfant 0-7 ans':
                             $maxPlaces = $places['placesA'];
                             break;

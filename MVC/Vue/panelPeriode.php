@@ -18,6 +18,7 @@
             <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-left">ID</th>
+                    <th class="py-3 px-6 text-left">Nom</th>
                     <th class="py-3 px-6 text-left">Début</th>
                     <th class="py-3 px-6 text-left">Fin</th>
                 </tr>
@@ -26,8 +27,9 @@
                 <?php foreach ($periodes as $periode): ?>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($periode['id']); ?></td>
-                        <td class="py-3 px-6 text-left"><?= htmlspecialchars($periode['debut']); ?></td>
-                        <td class="py-3 px-6 text-left"><?= htmlspecialchars($periode['fin']); ?></td>
+                        <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($periode['nom']); ?></td>
+                        <td class="py-3 px-6 text-left"><?= htmlspecialchars(formatDate($periode['dateDebut'])); ?></td>
+                        <td class="py-3 px-6 text-left"><?= htmlspecialchars(formatDate($periode['dateFin'])); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
