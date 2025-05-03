@@ -348,9 +348,9 @@ include_once "connexion_db.php";
             SELECT 
                 tarif.id_liaison,
                 tarif.tarif,
-                categorie.lettre AS categorie_lettre
+                categorie.libelle
             FROM tarif
-            JOIN categorie ON tarif.id_categorie = categorie.id
+            JOIN categorie ON tarif.id_type_passager = categorie.id
             WHERE tarif.id_periode = :id_periode
         ");
         $stmtTarifs->bindParam(':id_periode', $idPeriode, PDO::PARAM_INT);

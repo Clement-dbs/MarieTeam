@@ -1,7 +1,5 @@
 <div class="flex h-screen">
-<aside class="bg-gray-800 text-white w-64 p-4">
 <?php include 'Vue/sidebarrePanel.php';?>
-</aside>
 <div class="container mx-auto p-4">
         <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">Liste des Réservations</h1>
         
