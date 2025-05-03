@@ -1,7 +1,5 @@
 <div class="flex h-screen">
-    <aside class="bg-gray-800 text-white w-64 p-4">
         <?php include 'Vue/sidebarrePanel.php'; ?>
-    </aside>
     <div class="container mx-auto p-4">
         <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">Liste des Tarifs</h1>
         <!-- Bouton Ajouter Tarif -->
@@ -69,7 +67,15 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap">
                                 <?= htmlspecialchars($tarif['periode_nom']); ?> (<?= htmlspecialchars($tarif['dateDebut']); ?> - <?= htmlspecialchars($tarif['dateFin']); ?>)
                             </td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($tarif['type_libelle']); ?></td>
+                            <td class="py-3 px-6 text-left">
+                                <?php
+                                if ($tarif['type_passager_libelle'] != null) {
+                                    echo htmlspecialchars($tarif['type_passager_libelle']);
+                                } else {
+                                    echo htmlspecialchars($tarif['type_vehicule_libelle']);
+                                }
+                                ?>
+                            </td>
                             <td class="py-3 px-6 text-left">
                                 <?= htmlspecialchars($tarif['port_depart']);?> - <?= htmlspecialchars($liaison['port_arrive']);?>
                             </td>

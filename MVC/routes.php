@@ -12,12 +12,14 @@ function routes($chemin) {
     $lesChemins["dashboard"] = "/PanelAdmin/index.php";
     $lesChemins["ajoutPeriode"] = "/PanelAdmin/Periode/ajoutPeriode.php";
     $lesChemins["panelPeriode"] = "/PanelAdmin/Periode/panelPeriode.php";
-    $lesChemins["pannelReservation"] = "/PanelAdmin/Reservation/panelReservation.php";
+    $lesChemins["panelReservation"] = "/PanelAdmin/Reservation/panelReservation.php";
     $lesChemins["gestionUtilisateurs"] = "/PanelAdmin/Utilisateur/gestionUtilisateurs.php";
     $lesChemins["panelBateau"] = "/PanelAdmin/Bateau/panelBateau.php";
     $lesChemins["ajoutBateau"] = "/PanelAdmin/Bateau/ajoutBateau.php";
     $lesChemins["panelTarifs"] = "/PanelAdmin/Tarif/panelTarifs.php";
     $lesChemins["ajoutTarif"] = "/PanelAdmin/Tarif/ajoutTarif.php";
+    $lesChemins["panelLiaison"] = "/PanelAdmin/Liaison/panelLiaison.php";
+    $lesChemins["ajoutLiaison"] = "/PanelAdmin/Liaison/ajoutLiaison.php";
     $lesChemins["defaut"] = "Pages/accueil.php";
     $lesChemins["reservation"] = "/Pages/reservation.php";
     $lesChemins["recapReservation"] = "/Pages/recapReservation.php";
