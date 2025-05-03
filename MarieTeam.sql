@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 03 mai 2025 à 14:42
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Généré le : sam. 03 mai 2025 à 14:55
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -246,9 +246,9 @@ CREATE TABLE `tarif` (
 --
 
 INSERT INTO `tarif` (`id`, `id_liaison`, `id_periode`, `id_type_passager`, `id_type_vehicule`, `tarif`) VALUES
-(4, 1, 1, 1, NULL, 5.00),
+(4, 1, 1, 1, NULL, 22.00),
 (5, 1, 1, 2, NULL, 12.00),
-(6, 1, 1, 3, NULL, 22.00),
+(6, 1, 1, 3, NULL, 5.00),
 (7, 1, 1, NULL, 4, 86.00),
 (8, 1, 1, NULL, 5, 129.00),
 (9, 1, 1, NULL, 6, 189.00),
@@ -294,9 +294,9 @@ CREATE TABLE `type_passager` (
 --
 
 INSERT INTO `type_passager` (`id`, `libelle`, `id_categorie`) VALUES
-(1, 'Enfant', 1),
+(1, 'Adulte', 1),
 (2, 'Junior', 1),
-(3, 'Adulte', 1);
+(3, 'Enfant', 1);
 
 -- --------------------------------------------------------
 
