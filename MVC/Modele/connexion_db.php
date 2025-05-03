@@ -3,7 +3,7 @@
     function connexionDatabase() {
         $login = "root";
         $mdp = "";
-        $bd = "marieteamwebcorrection";
+        $bd = "marieteam";
         $serveur = "localhost";
 
         try {
