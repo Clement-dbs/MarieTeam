@@ -32,10 +32,10 @@ if (isset($_POST['submit'])) {
             } else {
                 echo "Une erreur est survenue lors de l'ajout du bateau.";
             }
-            include "$racine/vue/ajoutBateau.php";
+            include "$racine/Vue/ajoutBateau.php";
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
         }
 }
-include "$racine/vue/ajoutBateau.php";
+include "$racine/Vue/ajoutBateau.php";
 ?>

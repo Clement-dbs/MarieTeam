@@ -1,4 +1,4 @@
 <?php
 
-include "$racine/vue/profil.php";
+include "$racine/Vue/profil.php";
 ?>

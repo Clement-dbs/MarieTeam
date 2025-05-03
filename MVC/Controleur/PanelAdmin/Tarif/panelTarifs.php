@@ -56,4 +56,4 @@ $tarifs = afficherTarifs($periodeSelectionnee, $liaisonSelectionnee);
 $periodes = recupererPeriodes();
 $liaisons = recupererLiaisons();
 
-include "$racine/vue/panelTarifs.php";
+include "$racine/Vue/panelTarifs.php";

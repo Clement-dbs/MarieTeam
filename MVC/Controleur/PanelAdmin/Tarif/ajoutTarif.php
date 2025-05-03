@@ -90,5 +90,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Inclure la vue
-include "$racine/vue/ajoutTarif.php";
+include "$racine/Vue/ajoutTarif.php";
 ?>

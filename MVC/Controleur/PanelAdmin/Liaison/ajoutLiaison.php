@@ -64,4 +64,4 @@ if (isset($_POST['submit'])) {
             echo "Erreur : " . $e->getMessage();
         }
 }
-include "$racine/vue/ajoutLiaison.php";
+include "$racine/Vue/ajoutLiaison.php";

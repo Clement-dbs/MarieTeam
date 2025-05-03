@@ -81,5 +81,5 @@ function adminNbBateau() {
     }
 }
 
-include "$racine/vue/dashboard.php";
+include "$racine/Vue/dashboard.php";
 ?>

@@ -19,6 +19,6 @@ if(isset($_POST['traversee'])){
     $traversee = getTraverseesById($_SESSION['traversee']);
 }
 
-include "$racine/vue/accueil.php";
+include "$racine/Vue/accueil.php";
 
 ?>

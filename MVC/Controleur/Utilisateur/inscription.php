@@ -33,5 +33,5 @@ if (isset($_POST['inscription'])) {
     }
 }
 
-include "$racine/vue/inscription.php";
+include "$racine/Vue/inscription.php";
 ?>

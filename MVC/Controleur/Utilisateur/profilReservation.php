@@ -36,4 +36,4 @@ function getReservations($userId, $type) {
 $reservationsPrevues = getReservations($userId, 'future'); // future pour réservations à venir
 $reservationsPassees = getReservations($userId, 'past'); // past pour réservations passées
 
-include "$racine/vue/profilReservation.php";
+include "$racine/Vue/profilReservation.php";

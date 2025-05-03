@@ -1,6 +1,6 @@
 <div class="flex h-screen">
     <!-- Sidebar -->
-        <?php include 'Vue/sidebarrePanel.php'; ?>
+        <?php include 'Vue/sideBarrePanel.php'; ?>
 
     <!-- Main Content -->
     <main class="flex-1 p-6 bg-gray-100">

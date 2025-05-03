@@ -20,4 +20,4 @@ function afficherLiaisons() {
 }
 
 $liaisons = afficherLiaisons();
-include "$racine/vue/panelLiaison.php";
+include "$racine/Vue/panelLiaison.php";

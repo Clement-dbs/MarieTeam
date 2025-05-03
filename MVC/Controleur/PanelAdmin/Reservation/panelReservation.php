@@ -26,4 +26,4 @@ function afficherReservations() {
 }
 
 $reservations = afficherReservations();
-include "$racine/vue/panelReservation.php";
+include "$racine/Vue/panelReservation.php";

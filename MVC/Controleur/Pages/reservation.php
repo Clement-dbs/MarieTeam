@@ -22,7 +22,7 @@ $placesRestantesParCategorie = [
   '3' => $placeRestantes['Place Véhicule Lourd']
 ];
 
-include "$racine/vue/reservation.php";
+include "$racine/Vue/reservation.php";
 
 if(isset($_POST['btn_submit'])){
 
