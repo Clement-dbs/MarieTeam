@@ -23,7 +23,7 @@ function lastUser() {
         $query->execute();        
         $result = $query->fetch(PDO::FETCH_ASSOC);
 
-        echo $result['nom'] . ' ' . $result['prenom'];
+        echo $result['prenom'] . ' ' . $result['nom'];
     } catch (PDOException $e) {
         die("Une erreur s'est produite : " . $e->getMessage());
     }
