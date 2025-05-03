@@ -4,7 +4,7 @@ function inscriptionUtilisateur($nom, $prenom, $email, $mdp, $telephone){
         $pdo = connexionDatabase();
         $mdpCrypte = password_hash($mdp, PASSWORD_BCRYPT);
 
-        $sql = "INSERT INTO Utilisateur (nom, prenom, email, mdp, telephone) 
+        $sql = "INSERT INTO utilisateur (nom, prenom, email, mdp, telephone) 
                 VALUES (:nom, :prenom, :email, :mdp, :telephone)";
                 
         $query = $pdo->prepare($sql);

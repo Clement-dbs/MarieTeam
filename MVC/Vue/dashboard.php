@@ -1,5 +1,5 @@
 <div class="flex h-screen">
-    <?php include 'Vue/sidebarrePanel.php';?>
+    <?php include 'Vue/sideBarrePanel.php';?>
 
   <!-- Main Content -->
   <main class="flex-1 p-6">

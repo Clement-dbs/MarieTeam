@@ -5,7 +5,7 @@ function connexionUtilisateur($email, $mdp){
      
         $pdo = connexionDatabase();
 
-        $sql = "SELECT id, mdp FROM Utilisateur WHERE email = :email";
+        $sql = "SELECT id, mdp FROM utilisateur WHERE email = :email";
         $query = $pdo->prepare($sql);
         $query->bindParam(':email', $email);
         $query->execute();
