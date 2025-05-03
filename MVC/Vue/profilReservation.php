@@ -47,7 +47,7 @@
                 foreach ($reservationsPassees as $reservation):?>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($reservation['id_reservation']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date_depart']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['port_depart'].' - '.$reservation['port_arrive']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['prix_total'].' €'); ?></td>
                                                       
