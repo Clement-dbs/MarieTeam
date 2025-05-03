@@ -64,7 +64,7 @@
 </div>
 
 <!-- Affichage des traversées -->
-<?php if (isset($_SESSION['liaison']) && !empty($traversees)&& isset($_SESSION['idPeriode'])) { ?>
+<?php if (isset($_SESSION['liaison']) && !empty($traversees)&& isset($_SESSION['dateDepart'])) { ?>
 <div class="flex flex-col justify-center bg-container">
     <div class="flex justify-center">
         <h2 class='text-2xl font-NeueMontrealBold m-14'>Sélectionnez votre trajet</h2>
