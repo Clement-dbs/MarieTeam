@@ -20,4 +20,4 @@ function afficherPeriodes() {
 }
 
 $periodes = afficherPeriodes();
-include "$racine/vue/panelPeriode.php";
+include "$racine/Vue/panelPeriode.php";

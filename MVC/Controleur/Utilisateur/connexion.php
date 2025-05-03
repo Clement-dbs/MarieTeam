@@ -18,5 +18,5 @@ if (isset($_POST['connexion'])) {
 }
 
 // Inclure la vue après la vérification
-include "$racine/vue/connexion.php";
+include "$racine/Vue/connexion.php";
 ?>

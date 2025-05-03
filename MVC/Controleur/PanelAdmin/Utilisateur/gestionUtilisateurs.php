@@ -13,4 +13,4 @@ try {
     die("Erreur lors de la récupération des utilisateurs : " . $e->getMessage());
 }
 
-include "$racine/vue/gestionUtilisateurs.php";
+include "$racine/Vue/gestionUtilisateurs.php";

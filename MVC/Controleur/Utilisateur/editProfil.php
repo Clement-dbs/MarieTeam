@@ -40,5 +40,5 @@ if (isset($_POST['modifier_profil'])) {
 }
 
 // Inclure la vue
-include "$racine/vue/editProfil.php";
+include "$racine/Vue/editProfil.php";
 ?>

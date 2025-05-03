@@ -20,10 +20,10 @@ if (isset($_POST['submit'])) {
         
         echo "Nouvelle periode enregistré, ".$nom." du ".$dateDebut." au ".$dateFin;
 
-        include "$racine/vue/ajoutPeriode.php";
+        include "$racine/Vue/ajoutPeriode.php";
 
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
         }
 }
-include "$racine/vue/ajoutPeriode.php";
+include "$racine/Vue/ajoutPeriode.php";

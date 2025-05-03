@@ -20,4 +20,4 @@ function afficherBateaux() {
 }
 
 $bateaux = afficherBateaux();
-include "$racine/vue/panelBateau.php";
+include "$racine/Vue/panelBateau.php";
