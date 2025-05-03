@@ -13,7 +13,7 @@
                 <select name="periodeGlobal" id="periodeGlobal" class="border border-gray-300 rounded px-4 py-2 w-full">
                     <option value="">-- Sélectionner une periode --</option>
                     <?php foreach ($periodes as $periode): ?>
-                        <option value="<?= htmlspecialchars($periode['id']); ?>"><?= htmlspecialchars($periode['debut']); ?></option>
+                        <option value="<?= htmlspecialchars($periode['id']); ?>"><?= htmlspecialchars($periode['nom']); ?>, <?= htmlspecialchars($periode['dateDebut']); ?> - <?= htmlspecialchars($periode['dateFin']); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -24,7 +24,7 @@
                 <select name="liaisonGlobal" id="liaisonGlobal" class="border border-gray-300 rounded px-4 py-2 w-full">
                     <option value="">-- Sélectionner une liaison --</option>
                     <?php foreach ($liaisons as $liaison): ?>
-                        <option value="<?= htmlspecialchars($liaison['code']); ?>"><?= htmlspecialchars($liaison['port_depart'] . ' - ' . $liaison['port_arrivee']); ?></option>
+                        <option value="<?= htmlspecialchars($liaison['id_liaison']); ?>"><?= htmlspecialchars($liaison['port_depart'] . ' - ' . $liaison['port_arrive']); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
