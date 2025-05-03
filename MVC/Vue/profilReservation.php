@@ -10,14 +10,6 @@
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Identifiant réservation</th>
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Date de la réservation</th>
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Traversée</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Adulte</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Junior</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Enfant</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Voiture < 4m</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Voiture < 5m</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Fourgon</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Camping Car</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Camion</th>
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Prix total</th>
                 </tr>
             </thead>
@@ -27,16 +19,8 @@
                 foreach ($reservationsPrevues as $reservation):?>
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($reservation['id_reservation']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date_depart']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['port_depart'].' - '.$reservation['port_arrivee']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['adulte']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['junior']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['enfant']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['voiture_4']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['voiture_5']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['fourgon']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camping_car']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camion']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['port_depart'].' - '.$reservation['port_arrive']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['prix_total'].' €'); ?></td>
                                                       
                         </tr>
@@ -54,14 +38,6 @@
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Identifiant réservation</th>
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Date de la réservation</th>
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Traversée</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Adulte</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Junior</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Enfant</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Voiture < 4m</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Voiture < 5m</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Fourgon</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Camping Car</th>
-                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Camion</th>
                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Prix total</th>
                 </tr>
             </thead>
@@ -72,15 +48,7 @@
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($reservation['id_reservation']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['date_depart']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['port_depart'].' - '.$reservation['port_arrivee']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['adulte']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['junior']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['enfant']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['voiture_4']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['voiture_5']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['fourgon']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camping_car']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['camion']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['port_depart'].' - '.$reservation['port_arrive']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($reservation['prix_total'].' €'); ?></td>
                                                       
                         </tr>
