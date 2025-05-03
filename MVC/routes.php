@@ -8,7 +8,6 @@ function routes($chemin) {
     $lesChemins["editProfil"] = "/Utilisateur/editProfil.php";
     $lesChemins["profilReservation"] = "/Utilisateur/profilReservation.php";
     $lesChemins["profil"] = "/Utilisateur/profil.php";
-    //$lesChemins["insertClient"] = "/PanelAdmin/insertClient.php";
     $lesChemins["dashboard"] = "/PanelAdmin/index.php";
     $lesChemins["ajoutPeriode"] = "/PanelAdmin/Periode/ajoutPeriode.php";
     $lesChemins["panelPeriode"] = "/PanelAdmin/Periode/panelPeriode.php";

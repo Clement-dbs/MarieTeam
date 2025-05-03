@@ -64,7 +64,7 @@
 </div>
 
 <!-- Affichage des traversées -->
-<?php if (isset($_SESSION['liaison']) && !empty($traversees)&& isset($_SESSION['idPeriode'])) { ?>
+<?php if (isset($_SESSION['liaison']) && !empty($traversees)&& isset($_SESSION['dateDepart'])) { ?>
 <div class="flex flex-col justify-center bg-container">
     <div class="flex justify-center">
         <h2 class='text-2xl font-NeueMontrealBold m-14'>Sélectionnez votre trajet</h2>
@@ -97,13 +97,13 @@
                                         </div>
                                         <div class='flex items-center'>
                                             <span class='text-xl font-NeueMontrealBold'>
-                                                <?php /*
+                                                <?php 
                                                 $periode = $_SESSION['dateDepart'] ?? null;
                                                 $tarifs = getTarifsByPeriode($periode);
-
+                                            
                                                 $tarifAdulte = null;
                                                 foreach ($tarifs as $tarif) {
-                                                    if ($tarif['num'] === 'Adulte') {
+                                                    if ($tarif['libelle'] === 'A') {
                                                         $tarifAdulte = $tarif['tarif'];
                                                         break;
                                                     }
@@ -112,7 +112,7 @@
                                                 $affichageTarif = (floor($tarifAdulte) == $tarifAdulte) 
                                                     ? number_format($tarifAdulte, 0, '.', '') 
                                                     : number_format($tarifAdulte, 2, '.', '');
-                                                echo "$affichageTarif €";*/
+                                                echo "Dès $affichageTarif €";
                                                 ?>
                                             </span>
                                         </div>
@@ -162,10 +162,7 @@
                 </div>
             <?php } ?>
         <?php } else { ?>
-                    <div class="flex flex-col items-center justify-center text-center p-10">
-                        <h2 class="text-2xl font-semibold text-blue-600 mb-2">Oups, aucun trajet ne correspond à votre recherche…</h2>
-                        <p class="text-gray-600 text-sm">Modifiez vos critères de recherche pour trouver un trajet disponible.</p>
-                    </div>
+                   
         <?php } ?>
     </div>
 </div>
