@@ -32,9 +32,9 @@
                         <tr class="border-b border-gray-200 hover:bg-gray-100">
                             <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($bateau['id']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['nom']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['A']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['B']); ?></td>
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['C']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['place_passager_max']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['place_vehicule_leger_max']); ?></td>
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['place_vehicule_lourd_max']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['A_Max']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['B_Max']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($bateau['C_Max']); ?></td>
