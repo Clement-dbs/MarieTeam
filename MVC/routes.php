@@ -14,6 +14,7 @@ function routes($chemin) {
     $lesChemins["panelReservation"] = "/PanelAdmin/Reservation/panelReservation.php";
     $lesChemins["deleteReservation"] = "/PanelAdmin/Reservation/deleteReservation.php";
     $lesChemins["gestionUtilisateurs"] = "/PanelAdmin/Utilisateur/gestionUtilisateurs.php";
+    $lesChemins["deleteUtilisateur"] = "/PanelAdmin/Utilisateur/deleteUtilisateur.php";
     $lesChemins["panelBateau"] = "/PanelAdmin/Bateau/panelBateau.php";
     $lesChemins["ajoutBateau"] = "/PanelAdmin/Bateau/ajoutBateau.php";
     $lesChemins["panelTarifs"] = "/PanelAdmin/Tarif/panelTarifs.php";
