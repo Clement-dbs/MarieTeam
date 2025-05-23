@@ -19,6 +19,7 @@
                         <th class="py-3 px-6 text-left">Liaison</th>
                         <th class="py-3 px-6 text-left">Distance</th>
                         <th class="py-3 px-6 text-left">Secteur</th>
+                        <th class="py-3 px-6 text-left">Liaison</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -27,7 +28,15 @@
                             <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($liaison['id_liaison']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($liaison['port_depart']. ' - '.$liaison['port_arrive']); ?></td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($liaison['distance']).' km'; ?></td> 
-                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($liaison['nom_secteur']); ?></td>                                                      
+                            <td class="py-3 px-6 text-left"><?= htmlspecialchars($liaison['nom_secteur']); ?></td>       
+                            <td class="py-3 px-6 text-left">
+                            <form method="post" action="./?action=deleteLiaison" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette liaison ?');">
+                                <input type="hidden" name="id_liaison" value="<?= $liaison['id_liaison']; ?>">
+                                <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>                                               
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

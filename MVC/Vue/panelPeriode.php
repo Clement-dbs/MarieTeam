@@ -19,6 +19,7 @@
                     <th class="py-3 px-6 text-left">Nom</th>
                     <th class="py-3 px-6 text-left">Début</th>
                     <th class="py-3 px-6 text-left">Fin</th>
+                    <th class="py-3 px-6 text-left">Action</th>
                 </tr>
             </thead>
             <tbody class="text-gray-600 text-sm font-light">
@@ -28,6 +29,14 @@
                         <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($periode['nom']); ?></td>
                         <td class="py-3 px-6 text-left"><?= htmlspecialchars(formatDate($periode['dateDebut'])); ?></td>
                         <td class="py-3 px-6 text-left"><?= htmlspecialchars(formatDate($periode['dateFin'])); ?></td>
+                        <td class="py-3 px-6 text-left">
+                            <form method="post" action="./?action=deletePeriode" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette periode ?');">
+                                <input type="hidden" name="id_periode" value="<?= $periode['id']; ?>">
+                                <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
