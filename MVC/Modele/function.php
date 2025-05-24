@@ -443,7 +443,15 @@ include_once "connexion_db.php";
     }
 
     function formatDate($date) {
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+        
+        if ($dateTime) {
+            return $dateTime->format('d/m/Y H:i');
+        }
+
         $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+        
         return $dateTime ? $dateTime->format('d/m/Y') : null;
     }
+    
     
