@@ -28,6 +28,9 @@ function routes($chemin) {
     $lesChemins["panelLiaison"] = "/PanelAdmin/Liaison/panelLiaison.php";
     $lesChemins["ajoutLiaison"] = "/PanelAdmin/Liaison/ajoutLiaison.php";
     $lesChemins["deleteLiaison"] = "/PanelAdmin/Liaison/deleteLiaison.php";
+    $lesChemins["panelSecteur"] = "/PanelAdmin/Secteur/panelSecteur.php";
+    $lesChemins["ajoutSecteur"] = "/PanelAdmin/Secteur/ajoutSecteur.php";
+    $lesChemins["deleteSecteur"] = "/PanelAdmin/Secteur/deleteSecteur.php";
     $lesChemins["defaut"] = "Pages/accueil.php";
     $lesChemins["reservation"] = "/Pages/reservation.php";
     $lesChemins["recapReservation"] = "/Pages/recapReservation.php";
