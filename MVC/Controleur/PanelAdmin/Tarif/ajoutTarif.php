@@ -9,9 +9,13 @@ function afficherTypesperiodesLiaisons() {
         $pdo = connexionDatabase();
 
         // Récupérer tous les types
-        $typesQuery = $pdo->prepare("SELECT * FROM type");
+        $typesQuery = $pdo->prepare("SELECT * FROM type_passager");
         $typesQuery->execute();
-        $types = $typesQuery->fetchAll(PDO::FETCH_ASSOC);
+        $type_passager = $typesQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        $typesQuery = $pdo->prepare("SELECT * FROM type_vehicule");
+        $typesQuery->execute();
+        $type_vehicule = $typesQuery->fetchAll(PDO::FETCH_ASSOC);
 
         // Récupérer toutes les periodes
         $periodesQuery = $pdo->prepare("SELECT * FROM periode");
@@ -23,7 +27,7 @@ function afficherTypesperiodesLiaisons() {
         $liaisonsQuery->execute();
         $liaisons = $liaisonsQuery->fetchAll(PDO::FETCH_ASSOC);
 
-        return ['types' => $types, 'debut' => $periodes, 'liaisons' => $liaisons];
+        return ['type_passager' => $type_passager, 'type_vehicule' => $type_vehicule, 'debut' => $periodes, 'liaisons' => $liaisons];
     } catch (PDOException $e) {
         die("Une erreur s'est produite : " . $e->getMessage());
     }
@@ -31,7 +35,8 @@ function afficherTypesperiodesLiaisons() {
 
 // Récupérer les données
 $data = afficherTypesperiodesLiaisons();
-$types = $data['types'];
+$type_passager = $data['type_passager'];
+$type_vehicule = $data['type_vehicule'];
 $periodes = $data['debut'];
 $liaisons = $data['liaisons'];
 
@@ -67,10 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Parcours des types et insertion des tarifs
-        foreach ($_POST['tarif'] as $typeId => $tarif) {
-            // Insertion du tarif avec la période et la liaison globale
+        // Insertion des tarifs passagers
+        foreach ($_POST['tarif_passager'] as $typeId => $tarif) {
             $query = $pdo->prepare("
-                INSERT INTO tarif (id_liaison, id_periode, id_type, tarif)
+                INSERT INTO tarif (id_liaison, id_periode, id_type_passager, tarif)
                 VALUES (:id_liaison, :id_periode, :id_type, :tarif)
             ");
             $query->execute([
@@ -80,6 +85,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':tarif' => $tarif,
             ]);
         }
+
+        // Insertion des tarifs véhicules
+        foreach ($_POST['tarif_vehicule'] as $typeId => $tarif) {
+            $query = $pdo->prepare("
+                INSERT INTO tarif (id_liaison, id_periode, id_type_vehicule, tarif)
+                VALUES (:id_liaison, :id_periode, :id_type, :tarif)
+            ");
+            $query->execute([
+                ':id_liaison' => $liaisonGlobalId,
+                ':id_periode' => $periodeGlobalId,
+                ':id_type' => $typeId,
+                ':tarif' => $tarif,
+            ]);
+        }
+
         header("Location: ./?action=panelTarifs");
 
     } catch (PDOException $e) {

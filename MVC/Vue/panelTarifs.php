@@ -59,6 +59,7 @@
                         <th class="py-3 px-6 text-left">Catégorie</th>
                         <th class="py-3 px-6 text-left">Liaison</th>
                         <th class="py-3 px-6 text-left">Prix</th>
+                        <th class="py-3 px-6 text-left">Action</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -80,6 +81,14 @@
                                 <?= htmlspecialchars($tarif['port_depart']);?> - <?= htmlspecialchars($liaison['port_arrive']);?>
                             </td>
                             <td class="py-3 px-6 text-left"><?= htmlspecialchars($tarif['tarif'] . ' €'); ?></td>
+                            <td class="py-3 px-6 text-left">
+                            <form method="post" action="./?action=deleteTarif" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce tarif ?');">
+                                <input type="hidden" name="id_tarif" value="<?= $tarif['id_tarif']; ?>">
+                                <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

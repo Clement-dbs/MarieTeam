@@ -1,7 +1,5 @@
 <div class="flex h-screen">
-    <aside class="bg-gray-800 text-white w-64 p-4">
         <?php include 'Vue/sideBarrePanel.php'; ?>
-    </aside>
     <div class="container mx-auto p-4">
         <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">Gestion des Tarifs</h1>
 
@@ -39,13 +37,23 @@
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
-                        <?php foreach ($types as $type): ?>
+                        <?php foreach ($type_passager as $type): ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($type['libelle']); ?></td>
 
                                 <!-- Input pour le tarif -->
                                 <td class="py-3 px-6 text-left">
-                                    <input type="number" name="tarif[<?= $type['id']; ?>]" class="border border-gray-300 rounded px-4 py-2 w-full" required>
+                                    <input type="number" name="tarif_passager[<?= $type['id']; ?>]" class="border border-gray-300 rounded px-4 py-2 w-full" required>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php foreach ($type_vehicule as $type): ?>
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($type['libelle']); ?></td>
+
+                                <!-- Input pour le tarif -->
+                                <td class="py-3 px-6 text-left">
+                                    <input type="number" name="tarif_vehicule[<?= $type['id']; ?>]" class="border border-gray-300 rounded px-4 py-2 w-full" required>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

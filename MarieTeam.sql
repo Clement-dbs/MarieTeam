@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 03 mai 2025 à 14:42
+-- Généré le : sam. 24 mai 2025 à 15:41
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -145,6 +145,16 @@ CREATE TABLE `passager` (
   `id_type_passager` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `passager`
+--
+
+INSERT INTO `passager` (`quantite`, `id_reservation`, `id_type_passager`) VALUES
+(5, 163, 1),
+(5, 163, 2),
+(6, 163, 3),
+(2, 164, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -205,6 +215,14 @@ CREATE TABLE `reservation` (
   `id_traversee` int(11) NOT NULL,
   `id_utilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `reservation`
+--
+
+INSERT INTO `reservation` (`id`, `prix_total`, `date`, `id_traversee`, `id_utilisateur`) VALUES
+(163, 4318, '2025-05-24 12:52:02', 1, 5),
+(164, 10, '2025-05-24 13:39:15', 10, 5);
 
 -- --------------------------------------------------------
 
@@ -275,7 +293,8 @@ CREATE TABLE `traversee` (
 INSERT INTO `traversee` (`id`, `depart`, `arrive`, `id_liaison`) VALUES
 (1, '2025-06-10 06:00:00', '2025-06-10 12:00:00', 1),
 (2, '2025-04-29 10:44:12', '2025-06-11 13:00:00', 1),
-(3, '2025-06-11 07:00:00', '2025-06-11 13:00:00', 2);
+(3, '2025-06-11 07:00:00', '2025-06-11 13:00:00', 2),
+(10, '2025-05-29 17:31:00', '2025-05-29 18:33:00', 3);
 
 -- --------------------------------------------------------
 
@@ -360,6 +379,16 @@ CREATE TABLE `vehicule` (
   `id_type_vehicule` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `vehicule`
+--
+
+INSERT INTO `vehicule` (`quantite`, `id_reservation`, `id_type_vehicule`) VALUES
+(6, 163, 4),
+(8, 163, 5),
+(7, 163, 6),
+(6, 163, 7);
+
 -- --------------------------------------------------------
 
 --
@@ -438,6 +467,7 @@ CREATE TABLE `vue_traversee` (
 ,`depart` varchar(50)
 ,`arrive` varchar(50)
 ,`id_bateau` int(11)
+,`nom_bateau` varchar(30)
 ,`places_passager_restantes` decimal(33,0)
 ,`places_vehicule_leger_restantes` decimal(33,0)
 ,`places_vehicule_lourd_restantes` decimal(33,0)
@@ -477,7 +507,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vue_traversee`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_traversee`  AS SELECT `t`.`id` AS `id_traversee`, `t`.`depart` AS `date_depart`, `t`.`arrive` AS `date_arrive`, `t`.`id_liaison` AS `id_liaison`, `pd`.`nom` AS `depart`, `pa`.`nom` AS `arrive`, `l`.`id_bateau` AS `id_bateau`, `b`.`place_passager_max`- coalesce((select sum(`p`.`quantite`) from (((`reservation` `r` join `passager` `p` on(`r`.`id` = `p`.`id_reservation`)) join `type_passager` `tp` on(`p`.`id_type_passager` = `tp`.`id`)) join `categorie` `c` on(`tp`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'A'),0) AS `places_passager_restantes`, `b`.`place_vehicule_leger_max`- coalesce((select sum(`v`.`quantite`) from (((`reservation` `r` join `vehicule` `v` on(`r`.`id` = `v`.`id_reservation`)) join `type_vehicule` `tv` on(`v`.`id_type_vehicule` = `tv`.`id`)) join `categorie` `c` on(`tv`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'B'),0) AS `places_vehicule_leger_restantes`, `b`.`place_vehicule_lourd_max`- coalesce((select sum(`v`.`quantite`) from (((`reservation` `r` join `vehicule` `v` on(`r`.`id` = `v`.`id_reservation`)) join `type_vehicule` `tv` on(`v`.`id_type_vehicule` = `tv`.`id`)) join `categorie` `c` on(`tv`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'C'),0) AS `places_vehicule_lourd_restantes` FROM ((((`traversee` `t` join `liaison` `l` on(`t`.`id_liaison` = `l`.`id`)) join `bateau` `b` on(`l`.`id_bateau` = `b`.`id`)) join `port` `pd` on(`l`.`port_depart` = `pd`.`id`)) join `port` `pa` on(`l`.`port_arrive` = `pa`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_traversee`  AS SELECT `t`.`id` AS `id_traversee`, `t`.`depart` AS `date_depart`, `t`.`arrive` AS `date_arrive`, `t`.`id_liaison` AS `id_liaison`, `pd`.`nom` AS `depart`, `pa`.`nom` AS `arrive`, `l`.`id_bateau` AS `id_bateau`, `b`.`nom` AS `nom_bateau`, `b`.`place_passager_max`- coalesce((select sum(`p`.`quantite`) from (((`reservation` `r` join `passager` `p` on(`r`.`id` = `p`.`id_reservation`)) join `type_passager` `tp` on(`p`.`id_type_passager` = `tp`.`id`)) join `categorie` `c` on(`tp`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'A'),0) AS `places_passager_restantes`, `b`.`place_vehicule_leger_max`- coalesce((select sum(`v`.`quantite`) from (((`reservation` `r` join `vehicule` `v` on(`r`.`id` = `v`.`id_reservation`)) join `type_vehicule` `tv` on(`v`.`id_type_vehicule` = `tv`.`id`)) join `categorie` `c` on(`tv`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'B'),0) AS `places_vehicule_leger_restantes`, `b`.`place_vehicule_lourd_max`- coalesce((select sum(`v`.`quantite`) from (((`reservation` `r` join `vehicule` `v` on(`r`.`id` = `v`.`id_reservation`)) join `type_vehicule` `tv` on(`v`.`id_type_vehicule` = `tv`.`id`)) join `categorie` `c` on(`tv`.`id_categorie` = `c`.`id`)) where `r`.`id_traversee` = `t`.`id` and `c`.`libelle` = 'C'),0) AS `places_vehicule_lourd_restantes` FROM ((((`traversee` `t` join `liaison` `l` on(`t`.`id_liaison` = `l`.`id`)) join `bateau` `b` on(`l`.`id_bateau` = `b`.`id`)) join `port` `pd` on(`l`.`port_depart` = `pd`.`id`)) join `port` `pa` on(`l`.`port_arrive` = `pa`.`id`)) ;
 
 --
 -- Index pour les tables déchargées
@@ -651,7 +681,7 @@ ALTER TABLE `port`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT pour la table `secteur`
@@ -669,7 +699,7 @@ ALTER TABLE `tarif`
 -- AUTO_INCREMENT pour la table `traversee`
 --
 ALTER TABLE `traversee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `type_passager`
