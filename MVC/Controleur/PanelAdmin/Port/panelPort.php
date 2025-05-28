@@ -3,21 +3,21 @@ if (!isset($_SESSION['utilisateur']) || getAdminLevel() < 1) {
     header("Location: ./?action=defaut");
     exit("Accès interdit.");
 }
-function afficherLiaisons() {
+function afficherPorts() {
     try {
         $pdo = connexionDatabase();
         $query = $pdo->prepare("
         SELECT *
-        FROM vue_liaisons
+        FROM vue_ports
         ");
         $query->execute();
-        $liaisons = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $liaisons;
+        $ports = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $ports;
 
     } catch (PDOException $e) {
         die("Une erreur s'est produite : " . $e->getMessage());
     }
 }
 
-$liaisons = afficherLiaisons();
-include "$racine/Vue/panelLiaison.php";
+$ports = afficherPorts();
+include "$racine/Vue/panelPort.php";

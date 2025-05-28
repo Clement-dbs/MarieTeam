@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 24 mai 2025 à 15:41
+-- Généré le : mer. 28 mai 2025 à 13:45
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `bateau` (
   `id` int(11) NOT NULL,
   `nom` varchar(30) NOT NULL,
+  `nomImage` varchar(50) NOT NULL,
   `longueur` varchar(30) NOT NULL,
   `largeur` varchar(30) NOT NULL,
   `vitesse` varchar(30) NOT NULL,
@@ -43,9 +44,9 @@ CREATE TABLE `bateau` (
 -- Déchargement des données de la table `bateau`
 --
 
-INSERT INTO `bateau` (`id`, `nom`, `longueur`, `largeur`, `vitesse`, `place_passager_max`, `place_vehicule_leger_max`, `place_vehicule_lourd_max`, `id_port`) VALUES
-(1, 'Ferry Méditerranée', '180', '30', '25', 250, 60, 15, 1),
-(2, 'Atlantique Express', '150', '28', '22', 220, 50, 10, 4);
+INSERT INTO `bateau` (`id`, `nom`, `nomImage`, `longueur`, `largeur`, `vitesse`, `place_passager_max`, `place_vehicule_leger_max`, `place_vehicule_lourd_max`, `id_port`) VALUES
+(1, 'Ferry Méditerranée', '', '180', '30', '25', 250, 60, 15, 1),
+(2, 'Atlantique Express', '', '150', '28', '22', 220, 50, 10, 4);
 
 -- --------------------------------------------------------
 
@@ -130,7 +131,6 @@ CREATE TABLE `liaison` (
 
 INSERT INTO `liaison` (`id`, `distance`, `port_arrive`, `port_depart`, `id_secteur`, `id_bateau`) VALUES
 (1, 300.50, 2, 1, 1, 1),
-(2, 450.80, 5, 4, 2, 2),
 (3, 30.00, 1, 2, 1, 1);
 
 -- --------------------------------------------------------
@@ -153,7 +153,8 @@ INSERT INTO `passager` (`quantite`, `id_reservation`, `id_type_passager`) VALUES
 (5, 163, 1),
 (5, 163, 2),
 (6, 163, 3),
-(2, 164, 1);
+(2, 164, 1),
+(1, 165, 2);
 
 -- --------------------------------------------------------
 
@@ -222,7 +223,8 @@ CREATE TABLE `reservation` (
 
 INSERT INTO `reservation` (`id`, `prix_total`, `date`, `id_traversee`, `id_utilisateur`) VALUES
 (163, 4318, '2025-05-24 12:52:02', 1, 5),
-(164, 10, '2025-05-24 13:39:15', 10, 5);
+(164, 10, '2025-05-24 13:39:15', 10, 5),
+(165, 141, '2025-05-27 07:45:03', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -292,8 +294,6 @@ CREATE TABLE `traversee` (
 
 INSERT INTO `traversee` (`id`, `depart`, `arrive`, `id_liaison`) VALUES
 (1, '2025-06-10 06:00:00', '2025-06-10 12:00:00', 1),
-(2, '2025-04-29 10:44:12', '2025-06-11 13:00:00', 1),
-(3, '2025-06-11 07:00:00', '2025-06-11 13:00:00', 2),
 (10, '2025-05-29 17:31:00', '2025-05-29 18:33:00', 3);
 
 -- --------------------------------------------------------
@@ -361,7 +361,6 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `email`, `mdp`, `telephone`, `isAdmin`) VALUES
-(1, 'Dupont', 'Jean', 'jean.dupont@example.com', 'hashed_mdp', '0601020304', 0),
 (2, 'Martin', 'Lucie', 'lucie.martin@example.com', '1', '0605060708', 1),
 (3, 'Dubois', 'Clément', 'contact.clementdbs@gmail.com', '$2y$10$MgEJI6OKor1Mi05iceDFTOUQ/D46njsRtYn0dqtiMML3qwh3t2KHS', '0642852548', NULL),
 (4, 'Dubois', 'Clement', 'contact.clement@gmail.com', '$2y$10$CQK2aUaE3dgUhsrPkpdTiu1n8w/JS7ItR.D62fLQk.DAc0AAMFwt2', '0642852548', 1),
@@ -387,7 +386,8 @@ INSERT INTO `vehicule` (`quantite`, `id_reservation`, `id_type_vehicule`) VALUES
 (6, 163, 4),
 (8, 163, 5),
 (7, 163, 6),
-(6, 163, 7);
+(6, 163, 7),
+(1, 165, 5);
 
 -- --------------------------------------------------------
 
@@ -400,6 +400,19 @@ CREATE TABLE `vue_liaisons` (
 ,`distance` decimal(15,2)
 ,`port_depart` varchar(50)
 ,`port_arrive` varchar(50)
+,`id_secteur` int(11)
+,`nom_secteur` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Doublure de structure pour la vue `vue_ports`
+-- (Voir ci-dessous la vue réelle)
+--
+CREATE TABLE `vue_ports` (
+`id_port` int(11)
+,`nom_port` varchar(50)
 ,`id_secteur` int(11)
 ,`nom_secteur` varchar(50)
 );
@@ -481,6 +494,15 @@ CREATE TABLE `vue_traversee` (
 DROP TABLE IF EXISTS `vue_liaisons`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_liaisons`  AS SELECT `l`.`id` AS `id_liaison`, `l`.`distance` AS `distance`, `p_depart`.`nom` AS `port_depart`, `p_arrive`.`nom` AS `port_arrive`, `l`.`id_secteur` AS `id_secteur`, `s`.`nom` AS `nom_secteur` FROM (((`liaison` `l` join `port` `p_depart` on(`l`.`port_depart` = `p_depart`.`id`)) join `port` `p_arrive` on(`l`.`port_arrive` = `p_arrive`.`id`)) join `secteur` `s` on(`l`.`id_secteur` = `s`.`id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la vue `vue_ports`
+--
+DROP TABLE IF EXISTS `vue_ports`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_ports`  AS SELECT `p`.`id` AS `id_port`, `p`.`nom` AS `nom_port`, `s`.`id` AS `id_secteur`, `s`.`nom` AS `nom_secteur` FROM (`port` `p` join `secteur` `s` on(`p`.`id_secteur` = `s`.`id`)) ;
 
 -- --------------------------------------------------------
 
@@ -675,13 +697,13 @@ ALTER TABLE `periode`
 -- AUTO_INCREMENT pour la table `port`
 --
 ALTER TABLE `port`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT pour la table `secteur`

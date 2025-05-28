@@ -5,13 +5,13 @@ if (!isset($_SESSION['utilisateur']) || getAdminLevel() < 1) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['id_liaison'])) {
-        $idLiaison = intval($_POST['id_liaison']);
+    if (!empty($_POST['id_port'])) {
+        $idPort = intval($_POST['id_port']);
 
         try {
             $pdo = connexionDatabase();
-            $query = $pdo->prepare("DELETE FROM liaison WHERE id = :id");
-            $query->bindParam(':id', $idLiaison, PDO::PARAM_INT);
+            $query = $pdo->prepare("DELETE FROM port WHERE id = :id");
+            $query->bindParam(':id', $idPort, PDO::PARAM_INT);
 
             if ($query->execute()) {
                 $_SESSION['success'] = "La réservation a bien été supprimée.";
@@ -28,4 +28,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['error'] = "Méthode non autorisée.";
 }
 
-header("Location: ./?action=panelLiaison");
+header("Location: ./?action=panelPort");
