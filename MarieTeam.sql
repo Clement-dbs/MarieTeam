@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `bateau` (
   `id` int(11) NOT NULL,
   `nom` varchar(30) NOT NULL,
-  `nomImage` varchar(50) NOT NULL,
+  `nom_image` varchar(50) NOT NULL,
   `longueur` varchar(30) NOT NULL,
   `largeur` varchar(30) NOT NULL,
   `vitesse` varchar(30) NOT NULL,
@@ -44,16 +44,16 @@ CREATE TABLE `bateau` (
 -- Déchargement des données de la table `bateau`
 --
 
-INSERT INTO `bateau` (`id`, `nom`, `nomImage`, `longueur`, `largeur`, `vitesse`, `place_passager_max`, `place_vehicule_leger_max`, `place_vehicule_lourd_max`, `id_port`) VALUES
-(1, 'Ferry Méditerranée', '', '180', '30', '25', 250, 60, 15, 1),
-(2, 'Atlantique Express', '', '150', '28', '22', 220, 50, 10, 4),
-(3, 'Beaucoup Express', '', '137', '25', '23', 197, 32, 18, 4),
-(4, 'Promettre Express', '', '108', '22', '30', 183, 39, 11, 1),
-(5, 'Gros Express', '', '189', '32', '28', 220, 63, 17, 2),
-(6, 'Trois Express', '', '186', '33', '29', 220, 58, 25, 6),
-(7, 'Importance Express', '', '182', '31', '21', 233, 69, 13, 4),
-(8, 'Envie Express', '', '175', '30', '23', 212, 31, 18, 1),
-(9, 'Maintenant Express', '', '190', '27', '25', 193, 51, 23, 1);
+INSERT INTO `bateau` (`id`, `nom`, `nom_image`, `longueur`, `largeur`, `vitesse`, `place_passager_max`, `place_vehicule_leger_max`, `place_vehicule_lourd_max`, `id_port`) VALUES
+(1, 'Ferry Méditerranée', 'legende_marine', '180', '30', '25', 250, 60, 15, 1),
+(2, 'Atlantique Express', 'legende_marine', '150', '28', '22', 220, 50, 10, 4),
+(3, 'Beaucoup Express', 'legende_marine', '137', '25', '23', 197, 32, 18, 4),
+(4, 'Promettre Express', 'legende_marine', '108', '22', '30', 183, 39, 11, 1),
+(5, 'Gros Express', 'vague_agile', '189', '32', '28', 220, 63, 17, 2),
+(6, 'Trois Express', 'vague_agile', '186', '33', '29', 220, 58, 25, 6),
+(7, 'Importance Express', 'vague_agile', '182', '31', '21', 233, 69, 13, 4),
+(8, 'Envie Express', 'vague_agile', '175', '30', '23', 212, 31, 18, 1),
+(9, 'Maintenant Express', 'vague_agile', '190', '27', '25', 193, 51, 23, 1);
 
 -- --------------------------------------------------------
 
