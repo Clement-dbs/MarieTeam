@@ -6,6 +6,8 @@
         <a href="./?action=dashboard" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Dashboard</a>        
         <a href="./?action=panelReservation" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Réservations</a>
         <a href="./?action=panelPeriode" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Période</a>
+        <a href="./?action=panelSecteur" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Secteur</a>
+        <a href="./?action=panelPort" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Port</a>
         <a href="./?action=panelBateau" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Bateau</a>
         <a href="./?action=panelTarifs" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Tarifs</a>
         <a href="./?action=panelLiaison" class="block text-gray-200 hover:bg-gray-700 px-3 py-2 rounded-md">Liaison</a>
