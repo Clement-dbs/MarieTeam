@@ -21,6 +21,10 @@
           <span class="text-green-500 font-bold"><?php adminNbResa();?></span>
         </p>
         <p class="text-gray-600">
+          Chiffre d'affaire des réservations : 
+          <span class="text-green-500 font-bold"><?php adminCA();?> €</span>
+        </p>
+        <p class="text-gray-600">
           Nombre de périodes : 
           <span class="text-green-500 font-bold"><?php adminNbperiode();?></span>
         </p>

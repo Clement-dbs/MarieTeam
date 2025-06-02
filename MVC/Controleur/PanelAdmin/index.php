@@ -81,5 +81,18 @@ function adminNbBateau() {
     }
 }
 
+function adminCA() {
+    try {   
+        $pdo = connexionDatabase();
+        $query = $pdo->prepare("SELECT SUM(prix_total) AS total FROM reservation");
+        $query->execute();        
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        echo$result['total'];
+    } catch (PDOException $e) {
+        die("Une erreur s'est produite : " . $e->getMessage());
+    }
+}
+
 include "$racine/Vue/dashboard.php";
 ?>
