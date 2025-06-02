@@ -1,7 +1,5 @@
 <div class="flex h-screen">
-    <aside class="bg-gray-800 text-white w-64 p-4">
-        <?php include 'Vue/sidebarrePanel.php'; ?>
-    </aside>
+        <?php include 'Vue/sideBarrePanel.php'; ?>
     <div class="container mx-auto p-4">
         <h1 class="text-4xl font-bold text-center text-blue-600 mb-8">Gestion des Tarifs</h1>
 
@@ -13,7 +11,7 @@
                 <select name="periodeGlobal" id="periodeGlobal" class="border border-gray-300 rounded px-4 py-2 w-full">
                     <option value="">-- Sélectionner une periode --</option>
                     <?php foreach ($periodes as $periode): ?>
-                        <option value="<?= htmlspecialchars($periode['id']); ?>"><?= htmlspecialchars($periode['debut']); ?></option>
+                        <option value="<?= htmlspecialchars($periode['id']); ?>"><?= htmlspecialchars($periode['nom']); ?>, <?= htmlspecialchars($periode['dateDebut']); ?> - <?= htmlspecialchars($periode['dateFin']); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -24,7 +22,7 @@
                 <select name="liaisonGlobal" id="liaisonGlobal" class="border border-gray-300 rounded px-4 py-2 w-full">
                     <option value="">-- Sélectionner une liaison --</option>
                     <?php foreach ($liaisons as $liaison): ?>
-                        <option value="<?= htmlspecialchars($liaison['code']); ?>"><?= htmlspecialchars($liaison['port_depart'] . ' - ' . $liaison['port_arrivee']); ?></option>
+                        <option value="<?= htmlspecialchars($liaison['id_liaison']); ?>"><?= htmlspecialchars($liaison['port_depart'] . ' - ' . $liaison['port_arrive']); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -39,13 +37,23 @@
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
-                        <?php foreach ($types as $type): ?>
+                        <?php foreach ($type_passager as $type): ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($type['libelle']); ?></td>
 
                                 <!-- Input pour le tarif -->
                                 <td class="py-3 px-6 text-left">
-                                    <input type="number" name="tarif[<?= $type['id']; ?>]" class="border border-gray-300 rounded px-4 py-2 w-full" required>
+                                    <input type="number" name="tarif_passager[<?= $type['id']; ?>]" class="border border-gray-300 rounded px-4 py-2 w-full" required>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php foreach ($type_vehicule as $type): ?>
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap"><?= htmlspecialchars($type['libelle']); ?></td>
+
+                                <!-- Input pour le tarif -->
+                                <td class="py-3 px-6 text-left">
+                                    <input type="number" name="tarif_vehicule[<?= $type['id']; ?>]" class="border border-gray-300 rounded px-4 py-2 w-full" required>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

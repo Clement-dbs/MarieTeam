@@ -1,12 +1,10 @@
 <div class="flex h-screen">
-  <aside class="bg-gray-800 text-white w-64 p-4">
-    <?php include 'Vue/sidebarrePanel.php';?>
-  </aside>
+    <?php include 'Vue/sideBarrePanel.php';?>
 
   <!-- Main Content -->
   <main class="flex-1 p-6">
     <h2 id="dashboard" class="text-3xl font-bold text-gray-800 mb-4">
-      Bonjour <?php echo $_SESSION['utilisateur'][0]['nom'] . " " . $_SESSION['utilisateur'][0]['prenom']; ?>
+      Bonjour <?php echo $_SESSION['utilisateur'][0]['prenom'] . " " . $_SESSION['utilisateur'][0]['nom']; ?>
     </h2>
     
     <!-- Grid layout for the cards -->
@@ -21,6 +19,10 @@
         <p class="text-gray-600">
           Nombre de réservations : 
           <span class="text-green-500 font-bold"><?php adminNbResa();?></span>
+        </p>
+        <p class="text-gray-600">
+          Chiffre d'affaire des réservations : 
+          <span class="text-green-500 font-bold"><?php adminCA();?> €</span>
         </p>
         <p class="text-gray-600">
           Nombre de périodes : 
@@ -41,7 +43,6 @@
         <h3 class="text-xl font-semibold mb-4">Activité récente</h3>
         <ul class="space-y-2">
           <li class="text-gray-600">Dernier utilisateur enregistré : <span class="font-bold"><?php lastUser();?></span></li>
-          <li class="text-gray-600">Mise à jour des paramètres système.</li>
         </ul>
       </div>
     </div>

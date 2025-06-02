@@ -12,13 +12,9 @@
                 <h2 class="text-xl font-semibold text-gray-800">Email</h2>
                 <p class="text-gray-600"><?= $_SESSION['utilisateur'][0]['email'] ?></p>
             </div>
-            <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-800">Mot de passe</h2>
-                <p class="text-gray-600"><?= $_SESSION['utilisateur'][0]['mdp'] ?></p>
-            </div>
         </div>
         <div class="text-center mt-8">
-            <a href="#" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600">Modifier le Profil</a>
+            <a href="./?action=editProfil" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600">Modifier le Profil</a>
         </div>
     </div>
 

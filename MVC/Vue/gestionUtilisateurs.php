@@ -1,8 +1,6 @@
 <div class="flex h-screen">
     <!-- Sidebar -->
-    <aside class="bg-gray-800 text-white w-64 p-4">
-        <?php include 'Vue/sidebarrePanel.php'; ?>
-    </aside>
+        <?php include 'Vue/sideBarrePanel.php'; ?>
 
     <!-- Main Content -->
     <main class="flex-1 p-6 bg-gray-100">
@@ -16,6 +14,7 @@
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Email</th>
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Téléphone</th>
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Admin</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +25,14 @@
                         <td class="py-3 px-4"><?= htmlspecialchars($utilisateur['email']); ?></td>
                         <td class="py-3 px-4"><?= htmlspecialchars($utilisateur['telephone']); ?></td>
                         <td class="py-3 px-4"><?= htmlspecialchars($utilisateur['isAdmin']); ?></td>
+                        <td class="py-3 px-6 text-left">
+                            <form method="post" action="./?action=deleteUtilisateur" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                <input type="hidden" name="id_utilisateur" value="<?= $utilisateur['id']; ?>">
+                                <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

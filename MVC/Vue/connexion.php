@@ -11,6 +11,11 @@
         <label for="mdp" class="block text-sm font-medium text-gray-700">Mot de passe</label>
         <input type="password" id="mdp" name="mdp" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
         </div>
+        <?php if (isset($_SESSION['erreur_connexion'])): ?>
+            <p class="text-red-500 text-sm text-center"><?php echo $_SESSION['erreur_connexion']; ?></p>
+            <?php unset($_SESSION['erreur_connexion']); // Supprimer l'erreur après affichage ?>
+        <?php endif; ?>
+
     </div>
 
     <div>

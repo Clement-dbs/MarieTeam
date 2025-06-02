@@ -5,7 +5,7 @@ function connexionUtilisateur($email, $mdp){
      
         $pdo = connexionDatabase();
 
-        $sql = "SELECT id, mdp FROM Utilisateur WHERE email = :email";
+        $sql = "SELECT id, mdp FROM utilisateur WHERE email = :email";
         $query = $pdo->prepare($sql);
         $query->bindParam(':email', $email);
         $query->execute();
@@ -64,5 +64,24 @@ function connexionUtilisateur($email, $mdp){
         }
         }
     } 
+
+    function modifierProfil($id, $email, $nom, $prenom, $mdp, $telephone) {
+        try {
+            $pdo = connexionDatabase();
+            $sql = "UPDATE Utilisateur SET email = :email, nom = :nom, prenom = :prenom, mdp = :mdp, telephone = :telephone WHERE id = :id";
+            $query = $pdo->prepare($sql);
+            $query->bindParam(':id', $id);
+            $query->bindParam(':email', $email);
+            $query->bindParam(':nom', $nom);
+            $query->bindParam(':prenom', $prenom);
+            $query->bindParam(':mdp', $mdp);
+            $query->bindParam(':telephone', $telephone);
+    
+            return $query->execute(); // Retourne true si la requête réussit
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
 
 ?>

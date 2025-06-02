@@ -1,8 +1,6 @@
 <div class="flex h-screen bg-gray-100">
     <!-- Sidebar -->
-    <aside class="bg-gray-800 text-white w-64 p-4">
-        <?php include 'Vue/sidebarrePanel.php'; ?>
-    </aside>
+        <?php include 'Vue/sideBarrePanel.php'; ?>
 
     <!-- Main Content -->
     <div class="flex flex-1 items-center justify-center">
@@ -11,6 +9,18 @@
             <div class="mb-6">
                 <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom du Bateau</label>
                 <input type="text" id="nom" name="nom" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150" 
+                       required>
+            </div>
+            <div class="mb-6">
+                <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Longueur du Bateau</label>
+                <input type="number" id="longueur" name="longueur" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150" 
+                       required>
+            </div>
+            <div class="mb-6">
+                <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Largeur du Bateau</label>
+                <input type="number" id="largeur" name="largeur" 
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150" 
                        required>
             </div>
@@ -27,7 +37,7 @@
                        required>
             </div>
             <div class="mb-6">
-                <label for="placeC" class="block text-sm font-medium text-gray-700 mb-1">Place B</label>
+                <label for="placeC" class="block text-sm font-medium text-gray-700 mb-1">Place C</label>
                 <input type="number" id="placeC" name="placeC"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 focus:border-blue-500 transition duration-150" 
                        required>
